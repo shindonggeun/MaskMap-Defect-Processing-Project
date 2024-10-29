@@ -50,7 +50,7 @@ subprojects {
 
 // 특정 서비스에만 Spring Cloud 설정 적용
 subprojects.findAll { project ->
-    project.name in ["FTP-Service"]
+    project.name in ["FTP-Service", "Data-Service"]
 }.each { project ->
     project.ext.set('springCloudVersion', "2023.0.3")
 
