@@ -1,0 +1,23 @@
+server:
+  port: 8000  # API Gateway 애플리케이션이 실행될 포트 번호, 클라이언트는 이 포트로 요청을 보냄
+
+spring:
+  application:
+    name: API-GATEWAY # Eureka에 등록될 애플리케이션 이름
+
+  cloud:
+    gateway:
+      routes:
+        - id: FTP-SERVICE  # Gateway에서 설정할 라우트의 식별자
+          uri: lb://FTP-SERVICE  # 요청을 로드밸런싱하여 FTP-SERVICE로 전달, 'lb://'는 Eureka를 통해 동적 로드 밸런싱
+          predicates:
+            - Path=/api/v1/ftp/**  # 경로 조건, 클라이언트가 /auth/로 시작하는 경로로 요청을 보낼 때 이 라우트를 사용
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/  # Eureka 서버의 URL, 모든 서비스들이 이 주소로 Eureka 서버에 등록 및 서비스 탐색을 수행
+
+# jwt setting
+jwt:
+  accessKey: TestAccessKey111111122222222223333333333333aaaaaaaaabbbbbbbbccccccccdddddddddfqwrqwfqwifjaisfjoihfoiqwflasjdglkkjasdlgjlkasdgjiowejgliasjglasjdgio
