@@ -17,7 +17,3 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/  # Eureka 서버의 URL, 모든 서비스들이 이 주소로 Eureka 서버에 등록 및 서비스 탐색을 수행
-
-# jwt setting
-jwt:
-  accessKey: TestAccessKey111111122222222223333333333333aaaaaaaaabbbbbbbbccccccccdddddddddfqwrqwfqwifjaisfjoihfoiqwflasjdglkkjasdlgjlkasdgjiowejgliasjglasjdgio
