@@ -6,12 +6,16 @@ import com.mirero.ftpservice.ftp.application.port.in.dto.LrfFileData;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.mirero.ftpservice.ftp.application.port.in.dto.LrfFileData.*;
 
 public class LrfFileParser implements Parser<LrfFileData> {
+
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 
     @Override
     public LrfFileData parse(String filePath) throws IOException {
@@ -28,16 +32,19 @@ public class LrfFileParser implements Parser<LrfFileData> {
 
                 if (line.startsWith("[RecipeBasicInformation]")) {
                     recipeBasicInformation = parseRecipeBasicInformation(reader);
-                }
-                else if (line.startsWith("[ResultBasicInformation]")) {
+                } else if (line.startsWith("[MaskInformation]")) {
+                    maskInformation = parseMaskInformation(reader);
+                } else if (line.startsWith("[ResultBasicInformation]")) {
                     resultBasicInformation = parseResultBasicInformation(reader);
+                } else if (line.startsWith("[InspectionSummary]")) {
+                    inspectionSummary = parseInspectionSummary(reader);
                 } else if (line.startsWith("[DefectList]")) {
                     defectList = parseDefectList(reader);
                 }
             }
 
             int defectCount = defectList.size();
-            return new LrfFileData(recipeBasicInformation, resultBasicInformation, maskInformation, inspectionSummary, defectList, defectCount);
+            return new LrfFileData(recipeBasicInformation, maskInformation, resultBasicInformation, inspectionSummary, defectList, defectCount);
         }
     }
 
@@ -52,7 +59,7 @@ public class LrfFileParser implements Parser<LrfFileData> {
         while ((line = reader.readLine()) != null) {
             line = line.trim().replace(";", "");
 
-            if (line.startsWith("[")) {
+            if (line.isEmpty()) {
                 break;
             }
 
@@ -71,6 +78,34 @@ public class LrfFileParser implements Parser<LrfFileData> {
         }
 
         return new RecipeBasicInformation(maskId, lotId, stepId, deviceId, inspType);
+    }
+
+    private MaskInformation parseMaskInformation(BufferedReader reader) throws IOException {
+        long podId = 0;
+        double rotation = 0.0;
+
+        String line;
+        while ((line = reader.readLine()) != null) {
+            line = line.trim().replace(";", "");
+
+            if (line.startsWith("[")) {
+                break;
+            }
+
+            if (line.startsWith("PodID")) {
+                podId = Long.parseLong(line.split(" ")[1]);
+            } else if (line.startsWith("DesignTypeName")) {
+                String designType = line.split(" ")[1];
+                rotation = extractRotationFromDesignType(designType);
+            }
+        }
+
+        return new MaskInformation(podId, rotation);
+    }
+
+    private double extractRotationFromDesignType(String designType) {
+        String rotationPart = designType.split("_")[1].replace("deg.drcp", "");
+        return Double.parseDouble(rotationPart);
     }
 
     private ResultBasicInformation parseResultBasicInformation(BufferedReader reader) throws IOException {
@@ -94,6 +129,48 @@ public class LrfFileParser implements Parser<LrfFileData> {
         }
 
         return new ResultBasicInformation(equipId, rcpVer);
+    }
+
+    private InspectionSummary parseInspectionSummary(BufferedReader reader) throws IOException {
+        LocalDateTime scanTime = null;
+        LocalDateTime endTime = null;
+        double pixelSize = 0.0;
+        int totalStripeNumber = 0;
+        int startStripeNumber = 0;
+        String resultFolder = null;
+        String inspNo = null;
+
+        String line;
+        while ((line = reader.readLine()) != null) {
+            line = line.trim().replace(";", "");
+
+            if (line.startsWith("[")) {
+                break;
+            }
+
+            if (line.startsWith("InspectionStartTime")) {
+                scanTime = parseDateTime(line.split(" ")[1] + " " + line.split(" ")[2]);
+            } else if (line.startsWith("InspectionFinishTime")) {
+                endTime = parseDateTime(line.split(" ")[1] + " " + line.split(" ")[2]);
+            } else if (line.startsWith("PixelSize")) {
+                pixelSize = Double.parseDouble(line.split(" ")[1]);
+            } else if (line.startsWith("TotalStripeNumber")) {
+                totalStripeNumber = Integer.parseInt(line.split(" ")[1]);
+            } else if (line.startsWith("StartStripeNumber")) {
+                startStripeNumber = Integer.parseInt(line.split(" ")[1]);
+            } else if (line.startsWith("ResultFolder")) {
+                resultFolder = line.split(" ")[1];
+            } else if (line.startsWith("Rff.CIMFileName")) {
+                inspNo = line.split(" ")[1];
+            }
+        }
+
+        return new InspectionSummary(scanTime, endTime, pixelSize, totalStripeNumber, startStripeNumber, resultFolder, inspNo);
+    }
+
+    private LocalDateTime parseDateTime(String dateTimeString) {
+        dateTimeString = dateTimeString.replace("\"", ""); // 따옴표 제거
+        return LocalDateTime.parse(dateTimeString, DATE_TIME_FORMATTER);
     }
 
     private List<Defect> parseDefectList(BufferedReader reader) throws IOException {

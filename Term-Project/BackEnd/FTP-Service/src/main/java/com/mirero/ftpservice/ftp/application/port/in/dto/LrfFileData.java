@@ -5,8 +5,8 @@ import java.util.List;
 
 public record LrfFileData(
         RecipeBasicInformation recipeBasicInformation,
-        ResultBasicInformation resultBasicInformation,
         MaskInformation maskInformation,
+        ResultBasicInformation resultBasicInformation,
         InspectionSummary inspectionSummary,
         List<Defect> defectList,
         int defectCount // defects.size()
@@ -20,24 +20,23 @@ public record LrfFileData(
     ) {}
 
     public record MaskInformation(
-            long podId, // PodID
+            long podId, // PodID -> ex. 11903135;에서 11903135을 가리킴
             double rotation // DesignTypeName -> ex. Samsung_0deg.drcp;에서 0을 가리킴
     ) {}
 
-    public record InspectionSummary(
-            String inspNo, // Rff.CIMFileName -> ex. PA230803033-20230819-091419;에서 PA230803033-20230819-091419을 가리킴
-            LocalDateTime scanTime, // InspectionStartTime
-            LocalDateTime endTime, // InspectionFinishTime
-            double pixelSize, // PixelSize
-            int totalStripeNumber, // TotalStripeNumber -> ex. 813;에서 813을 가리킴
-            int startStripeNumber, // StartStripeNumber -> ex. 1;에서 1을 가리킴
-            String resultFolder // ResultFolder -> ex. PA230803033-SSV000119-1BDB-230819-043951;에서 PA230803033-SSV000119-1BDB-230819-043951을 가리킴
-
+    public record ResultBasicInformation(
+            String equipId, // Create.SerialNo -> ex. AC001B015;에서 AC001B015을 가리킴
+            String rcpVer // Modify.AppVersion -> ex. 3.14.205.0;에서 3.14.205.0을 가리킴
     ) {}
 
-    public record ResultBasicInformation(
-            String equipId, // Create.SerialNo -> AC001B015;에서 AC001B015을 가리킴
-            String rcpVer // Modify.AppVersion -> ex. 3.14.205.0;에서 3.14.205.0을 가리킴
+    public record InspectionSummary(
+            LocalDateTime scanTime, // InspectionStartTime -> ex. "2023/08/19 04:39:51";에서 2023/08/19 04:39:51을 가리킴
+            LocalDateTime endTime, // InspectionFinishTime -> ex. "2023/08/19 09:14:19";에서 2023/08/19 09:14:19을 가리킴
+            double pixelSize, // PixelSize -> ex. 0.0210004494에서 0.0210004494을 가리킴
+            int totalStripeNumber, // TotalStripeNumber -> ex. 813;에서 813을 가리킴
+            int startStripeNumber, // StartStripeNumber -> ex. 1;에서 1을 가리킴
+            String resultFolder, // ResultFolder -> ex. PA230803033-SSV000119-1BDB-230819-043951;에서 PA230803033-SSV000119-1BDB-230819-043951을 가리킴
+            String inspNo // Rff.CIMFileName -> ex. PA230803033-20230819-091419;에서 PA230803033-20230819-091419을 가리킴
     ) {}
 
     public record Defect(
