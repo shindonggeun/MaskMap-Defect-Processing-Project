@@ -10,9 +10,10 @@ public record RffFileData(
         double adjustUnit, // LengthUnit 부분 -> um = 1.0, mm = 1000.0, nm = 0.001
         List<ClassifyInformation> classifyInformationList, // ClassLookup 부분
         List<AlignmentPoint> alignmentPoints, // AlignmentPoints 부분
+        Die die, // DiePitch, DieOrigin 부분
         List<Defect> defectList, // DefectList 부분
         int defectCount // defectList.size()
-) {
+) implements FileData {
     public record MaskSize(
             double width, // ex. SampleSize 2 152400 152400에서 2 부분 (2.0)
             double height // ex. SampleSize 2 152400 152400에서 152400 부분 (152400.0)
@@ -34,6 +35,14 @@ public record RffFileData(
             int id, // ex. 1 19600.000 19600.000에서 1을 가리킴
             double x, // ex. 1 19600.000 19600.000에서 19600.000을 가리킴
             double y // ex. 1 19600.000 19600.000에서 19600.000을 가리킴
+    ) {}
+
+    // Die 부분
+    public record Die(
+            double pitchX, // DiePitch -> ex. 30832.800 37799.200에서 30832.800을 가리킴
+            double pitchY, // DiePitch -> ex. 30832.800 37799.200에서 37799.200을 가리킴
+            double originX, // DieOrigin -> ex. 30070.800000 19621.200000에서 30070.800000을 가리킴
+            double originY // DieOrigin -> ex. 30070.800000 19621.200000에서 19621.200000을 가리킴
     ) {}
 
     public record Defect(
