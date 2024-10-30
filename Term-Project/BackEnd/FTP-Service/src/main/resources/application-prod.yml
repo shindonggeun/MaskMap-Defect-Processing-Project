@@ -1,0 +1,22 @@
+server:
+  port: 8081  # FTP-Service의 고유 포트
+
+spring:
+  application:
+    name: FTP-SERVICE  # Eureka에 등록될 서비스 이름
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka-server:8761/eureka/  # 배포 환경의 Eureka 서버 URL (eureka-server는 DNS, 로드 밸런서, 도커 네트워크 이름 사용 가능)
+    healthcheck:
+      enabled: true  # 배포 환경에서 헬스체크 활성화 (옵션)
+
+  instance:
+    prefer-ip-address: false  # IP 주소 대신 호스트 이름을 사용하여 등록
+    leaseRenewalIntervalInSeconds: 10  # Eureka 서버로의 갱신 빈도 설정 (초)
+    leaseExpirationDurationInSeconds: 30  # 만료 시간 설정 (초)
+
+logging:
+  level:
+    root: INFO  # 기본 로그 레벨 (필요 시 `DEBUG`로 변경 가능)
