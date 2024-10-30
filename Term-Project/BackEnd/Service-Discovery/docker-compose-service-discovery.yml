@@ -1,0 +1,19 @@
+services:
+  service_discovery:
+    container_name: service-discovery
+    build:
+      context: .
+      dockerfile: service-discovery.Dockerfile
+    image: service-discovery-img
+    restart: always
+    ports:
+      - "8761:8761"
+    environment:
+      - TZ=Asia/Seoul
+    networks:
+      - term-project-net
+
+networks:
+  term-project-net:
+    name: term-project-net
+    driver: bridge
