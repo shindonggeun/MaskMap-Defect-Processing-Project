@@ -1,0 +1,19 @@
+services:
+  ftp_service:
+    container_name: ftp-service
+    build:
+      context: .
+      dockerfile: ftp-service.Dockerfile
+    image: ftp-service-img
+    restart: always
+    ports:
+      - "8081:8081"
+    environment:
+      - TZ=Asia/Seoul
+    networks:
+      - term-project-net
+
+networks:
+  term-project-net:
+    name: term-project-net
+    driver: bridge
