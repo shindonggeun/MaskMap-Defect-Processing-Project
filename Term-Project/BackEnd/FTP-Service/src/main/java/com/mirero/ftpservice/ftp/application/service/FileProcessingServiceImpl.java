@@ -1,17 +1,15 @@
 package com.mirero.ftpservice.ftp.application.service;
 
-import com.mirero.ftpservice.ftp.adaptor.in.LrfFileParser;
-import com.mirero.ftpservice.ftp.adaptor.in.RffFileParser;
 import com.mirero.ftpservice.ftp.application.port.in.FileProcessingService;
 import com.mirero.ftpservice.ftp.application.port.in.Parser;
 import com.mirero.ftpservice.ftp.application.port.in.dto.FileData;
-import com.mirero.ftpservice.ftp.application.port.in.dto.LrfFileData;
-import com.mirero.ftpservice.ftp.application.port.in.dto.RffFileData;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class FileProcessingServiceImpl implements FileProcessingService {
@@ -21,6 +19,7 @@ public class FileProcessingServiceImpl implements FileProcessingService {
     @Override
     public FileData processFile(String filePath) throws IOException {
         String fileExtension = getFileExtension(filePath);
+        log.info("Processing file: {}", filePath);
         Parser<? extends FileData> parser = parserFactory.getParser(fileExtension);
         return parser.parse(filePath);
     }

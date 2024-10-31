@@ -10,3 +10,10 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/  # Eureka 서버의 URL
 
+ftp:
+  host: 192.168.70.212
+  port: 21
+  username: aegis_ftp
+  password: system
+  remote-directory: /home/aegis_ftp/AEGIS # FTP 서버의 대상 디렉토리
+  local-directory: C:/local-ftp-download # C 드라이브에 파일을 저장할 절대 경로 지정
