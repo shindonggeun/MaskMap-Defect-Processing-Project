@@ -5,4 +5,7 @@ dependencies {
 	// Feign 클라이언트
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// Spring Integration FTP
+	implementation 'org.springframework.integration:spring-integration-ftp'
 }
