@@ -25,6 +25,7 @@ public class LrfFileParser implements Parser<LrfFileData> {
             ResultBasicInformation resultBasicInformation = null;
             MaskInformation maskInformation = null;
             InspectionSummary inspectionSummary = null;
+            List<AreaInformation> areaInformationList = new ArrayList<>();
             List<Defect> defectList = new ArrayList<>();
 
             while ((line = reader.readLine()) != null) {
@@ -34,6 +35,8 @@ public class LrfFileParser implements Parser<LrfFileData> {
                     recipeBasicInformation = parseRecipeBasicInformation(reader);
                 } else if (line.startsWith("[MaskInformation]")) {
                     maskInformation = parseMaskInformation(reader);
+                } else if (line.startsWith("[AreaInformation]")) {
+                    areaInformationList = parseAreaInformationList(reader);
                 } else if (line.startsWith("[ResultBasicInformation]")) {
                     resultBasicInformation = parseResultBasicInformation(reader);
                 } else if (line.startsWith("[InspectionSummary]")) {
@@ -44,7 +47,8 @@ public class LrfFileParser implements Parser<LrfFileData> {
             }
 
             int defectCount = defectList.size();
-            return new LrfFileData(recipeBasicInformation, maskInformation, resultBasicInformation, inspectionSummary, defectList, defectCount);
+            return new LrfFileData(recipeBasicInformation, maskInformation, areaInformationList,
+                    resultBasicInformation, inspectionSummary, defectList, defectCount);
         }
     }
 
@@ -106,6 +110,69 @@ public class LrfFileParser implements Parser<LrfFileData> {
     private double extractRotationFromDesignType(String designType) {
         String rotationPart = designType.split("_")[1].replace("deg.drcp", "");
         return Double.parseDouble(rotationPart);
+    }
+
+    private List<AreaInformation> parseAreaInformationList(BufferedReader reader) throws IOException {
+        List<AreaInformation> list = new ArrayList<>();
+        String line;
+
+        DieSize dieSize = null;
+        DiePitch diePitch = null;
+        int dieCountX = 0;
+        int dieCountY = 0;
+        String currentAreaId = "";
+
+        // 여러 구역을 읽기 위한 반복문
+        while ((line = reader.readLine()) != null) {
+            line = line.trim().replace(";", "");
+
+            if (line.startsWith("[")) {
+                break;
+            }
+
+            // 새로운 구역의 시작
+            if (line.startsWith("Area")) {
+                String[] areaAndKey = line.split("\\.");
+                String areaId = areaAndKey[0];
+                String areaKey = areaAndKey[1];
+
+                // 새로운 Area 구역이 나타났다면 기존 구역 정보 리스트에 추가
+                if (!currentAreaId.equals(areaId) && dieSize != null && diePitch != null) {
+                    list.add(new AreaInformation(dieSize, diePitch, dieCountX, dieCountY));
+                    // 새로운 구역을 위해 초기화
+                    dieSize = null;
+                    diePitch = null;
+                    dieCountX = 0;
+                    dieCountY = 0;
+                }
+                currentAreaId = areaId; // 현재 구역을 업데이트
+
+                if (areaKey.startsWith("Width")) {
+                    double width = Double.parseDouble(line.split(" ")[1]);
+                    dieSize = new DieSize(width, dieSize == null ? 0.0 : dieSize.height());
+                } else if (areaKey.startsWith("Height")) {
+                    double height = Double.parseDouble(line.split(" ")[1]);
+                    dieSize = new DieSize(dieSize == null ? 0.0 : dieSize.width(), height);
+                } else if (areaKey.startsWith("HorzPitch")) {
+                    double horzPitch = Double.parseDouble(line.split(" ")[1]);
+                    diePitch = new DiePitch(horzPitch, diePitch == null ? 0.0 : diePitch.y());
+                } else if (areaKey.startsWith("VertPitch")) {
+                    double vertPitch = Double.parseDouble(line.split(" ")[1]);
+                    diePitch = new DiePitch(diePitch == null ? 0.0 : diePitch.x(), vertPitch);
+                } else if (areaKey.startsWith("HorzNumber")) {
+                    dieCountX = Integer.parseInt(line.split(" ")[1]);
+                } else if (areaKey.startsWith("VertNumber")) {
+                    dieCountY = Integer.parseInt(line.split(" ")[1]);
+                }
+            }
+        }
+
+        // 마지막 구역 데이터 추가
+        if (dieSize != null && diePitch != null) {
+            list.add(new AreaInformation(dieSize, diePitch, dieCountX, dieCountY));
+        }
+
+        return list;
     }
 
     private ResultBasicInformation parseResultBasicInformation(BufferedReader reader) throws IOException {

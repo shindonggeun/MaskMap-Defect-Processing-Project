@@ -6,6 +6,7 @@ import java.util.List;
 public record LrfFileData(
         RecipeBasicInformation recipeBasicInformation,
         MaskInformation maskInformation,
+        List<AreaInformation> areaInformationList,
         ResultBasicInformation resultBasicInformation,
         InspectionSummary inspectionSummary,
         List<Defect> defectList,
@@ -22,6 +23,13 @@ public record LrfFileData(
     public record MaskInformation(
             long podId, // PodID -> ex. 11903135;에서 11903135을 가리킴
             double rotation // DesignTypeName -> ex. Samsung_0deg.drcp;에서 0을 가리킴
+    ) {}
+
+    public record AreaInformation(
+            DieSize dieSize,
+            DiePitch diePitch,
+            int dieCountX, // AreaXX.HorNumber -> ex. 3;에서 3을 가리킴
+            int dieCountY // AreaXX.VertNumber -> ex. 3;에서 3을 가리킴
     ) {}
 
     public record ResultBasicInformation(
@@ -46,6 +54,16 @@ public record LrfFileData(
             DiePosition diePosition,
             int classType,
             ReferencePosition referencePosition
+    ) {}
+
+    public record DieSize(
+            double width, // AreaXX.Width -> ex. 30592.8000;에서 30592.8000을 가리킴
+            double height // AreaXX.Height -> ex. 37559.2000;에서 37559.2000을 가리킴
+    ) {}
+
+    public record DiePitch(
+            double x, // AreaXX.HorzPitch -> ex. 30832.8000;에서 30832.8000을 가리킴
+            double y // AreaXX.VertPitch -> ex. 37799.2000;에서 37799.2000을 가리킴
     ) {}
 
     public record DiePosition(
