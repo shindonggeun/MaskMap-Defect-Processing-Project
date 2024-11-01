@@ -32,7 +32,7 @@ public record RffFileData(
 
     // AlignmentPoints 부분
     public record AlignmentPoint(
-            int id, // ex. 1 19600.000 19600.000에서 1을 가리킴
+            int idx, // ex. 1 19600.000 19600.000에서 1을 가리킴
             double x, // ex. 1 19600.000 19600.000에서 19600.000을 가리킴
             double y // ex. 1 19600.000 19600.000에서 19600.000을 가리킴
     ) {}
@@ -46,7 +46,7 @@ public record RffFileData(
     ) {}
 
     public record Defect(
-            int id, // DEFECTID
+            int id, // DEFECTID -> ex. 1에서 1을 가리킴
             RelPosition relPosition,
             Size size,
             double defectArea, // DEFECTAREA
@@ -54,12 +54,12 @@ public record RffFileData(
     ) {}
 
     public record RelPosition(
-            double x, // XREL
-            double y // YREL
+            double x, // XREL -> ex. 12058.423에서 12058.423을 가리킴
+            double y // YREL -> ex. 58513.914에서 58513.914을 가리킴
     ) {}
 
     public record Size(
-            double width, // XSIZE
-            double height // YSIZE
+            double width, // XSIZE -> ex. 0.021에서 0.021을 가리킴
+            double height // YSIZE -> ex. 0.021에서 0.021을 가리킴
     ) {}
 }

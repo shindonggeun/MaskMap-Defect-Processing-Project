@@ -115,14 +115,10 @@ public class RffFileParser implements Parser<RffFileData> {
             String line = reader.readLine().trim().replace(";", "").replaceAll("\\s+", " ");
             String[] parts = line.split(" ");
 
-            if (parts.length >= 3) {
-                int id = Integer.parseInt(parts[0]);
-                double x = Double.parseDouble(parts[1]);
-                double y = Double.parseDouble(parts[2]);
-                list.add(new AlignmentPoint(id, x, y));
-            } else {
-                throw new IllegalArgumentException("Invalid alignment point format: " + line);
-            }
+            int idx = Integer.parseInt(parts[0]);
+            double x = Double.parseDouble(parts[1]);
+            double y = Double.parseDouble(parts[2]);
+            list.add(new AlignmentPoint(idx, x, y));
         }
         return list;
     }

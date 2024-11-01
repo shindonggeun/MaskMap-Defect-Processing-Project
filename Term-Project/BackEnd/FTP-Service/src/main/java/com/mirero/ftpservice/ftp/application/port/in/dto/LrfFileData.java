@@ -29,7 +29,7 @@ public record LrfFileData(
     public record AreaInformation(
             DieSize dieSize,
             DiePitch diePitch,
-            int dieCountX, // AreaXX.HorNumber -> ex. 3;에서 3을 가리킴
+            int dieCountX, // AreaXX.HorzNumber -> ex. 3;에서 3을 가리킴
             int dieCountY // AreaXX.VertNumber -> ex. 3;에서 3을 가리킴
     ) {}
 
