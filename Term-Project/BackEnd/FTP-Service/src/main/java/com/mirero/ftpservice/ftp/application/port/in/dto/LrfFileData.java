@@ -9,6 +9,7 @@ public record LrfFileData(
         List<AreaInformation> areaInformationList,
         ResultBasicInformation resultBasicInformation,
         InspectionSummary inspectionSummary,
+        List<ClassifyTypeInformation> ClassifyTypeInformationList, // ClassifyTypeInformation 부분
         List<Defect> defectList,
         int defectCount // defects.size()
 ) implements FileData {
@@ -45,6 +46,12 @@ public record LrfFileData(
             int startStripeNumber, // StartStripeNumber -> ex. 1;에서 1을 가리킴
             String resultFolder, // ResultFolder -> ex. PA230803033-SSV000119-1BDB-230819-043951;에서 PA230803033-SSV000119-1BDB-230819-043951을 가리킴
             String inspNo // Rff.CIMFileName -> ex. PA230803033-20230819-091419;에서 PA230803033-20230819-091419을 가리킴
+    ) {}
+
+    public record ClassifyTypeInformation(
+            int no, // DefectTypeID
+            String name, // DefectTypeName
+            String color // DefectTypeColor
     ) {}
 
     public record Defect(

@@ -26,6 +26,7 @@ public class LrfFileParser implements Parser<LrfFileData> {
             MaskInformation maskInformation = null;
             InspectionSummary inspectionSummary = null;
             List<AreaInformation> areaInformationList = new ArrayList<>();
+            List<ClassifyTypeInformation> classifyTypeInformationList = new ArrayList<>();
             List<Defect> defectList = new ArrayList<>();
 
             while ((line = reader.readLine()) != null) {
@@ -41,6 +42,8 @@ public class LrfFileParser implements Parser<LrfFileData> {
                     resultBasicInformation = parseResultBasicInformation(reader);
                 } else if (line.startsWith("[InspectionSummary]")) {
                     inspectionSummary = parseInspectionSummary(reader);
+                } else if (line.startsWith("[ClassifyTypeInformation]")) {
+                    classifyTypeInformationList = parseClassifyTypeInformation(reader);
                 } else if (line.startsWith("[DefectList]")) {
                     defectList = parseDefectList(reader);
                 }
@@ -48,7 +51,7 @@ public class LrfFileParser implements Parser<LrfFileData> {
 
             int defectCount = defectList.size();
             return new LrfFileData(recipeBasicInformation, maskInformation, areaInformationList,
-                    resultBasicInformation, inspectionSummary, defectList, defectCount);
+                    resultBasicInformation, inspectionSummary, classifyTypeInformationList, defectList, defectCount);
         }
     }
 
@@ -208,10 +211,16 @@ public class LrfFileParser implements Parser<LrfFileData> {
         String inspNo = null;
 
         String line;
+
+        // 이후 섹션을 확인할 수 있도록 reader에 mark 설정
+        reader.mark(1000); // 1000은 충분히 큰 수를 설정하여 줄을 모두 읽을 수 있도록 함
+
+
         while ((line = reader.readLine()) != null) {
             line = line.trim().replace(";", "");
 
             if (line.startsWith("[")) {
+                reader.reset(); // 이전 `mark` 위치로 돌아감
                 break;
             }
 
@@ -230,6 +239,9 @@ public class LrfFileParser implements Parser<LrfFileData> {
             } else if (line.startsWith("Rff.CIMFileName")) {
                 inspNo = line.split(" ")[1];
             }
+
+            // 줄을 읽기 전에 mark를 재설정하여 다음 루프에서 줄을 다시 읽을 수 있도록 함
+            reader.mark(1000);
         }
 
         return new InspectionSummary(scanTime, endTime, pixelSize, totalStripeNumber, startStripeNumber, resultFolder, inspNo);
@@ -238,6 +250,32 @@ public class LrfFileParser implements Parser<LrfFileData> {
     private LocalDateTime parseDateTime(String dateTimeString) {
         dateTimeString = dateTimeString.replace("\"", ""); // 따옴표 제거
         return LocalDateTime.parse(dateTimeString, DATE_TIME_FORMATTER);
+    }
+
+    private List<ClassifyTypeInformation> parseClassifyTypeInformation(BufferedReader reader) throws IOException {
+        List<ClassifyTypeInformation> list = new ArrayList<>();
+        String line;
+
+        // "DefectType"으로 시작하는 부분까지 건너뜀
+        while ((line = reader.readLine()) != null) {
+            line = line.trim();
+            if (line.startsWith("DefectType")) {
+                break;
+            }
+        }
+
+        while ((line = reader.readLine()) != null) {
+            line = line.trim().replace(";", "").replaceAll("\\s+", " ");
+
+            if (line.startsWith("[")) {
+                break;
+            }
+
+            String[] parts = line.split(" ");
+            list.add(new ClassifyTypeInformation(Integer.parseInt(parts[0]), parts[1], parts[2]));
+        }
+
+        return list;
     }
 
     private List<Defect> parseDefectList(BufferedReader reader) throws IOException {
