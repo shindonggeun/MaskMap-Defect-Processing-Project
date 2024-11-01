@@ -7,13 +7,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.channel.QueueChannel;
 import org.springframework.integration.config.EnableIntegration;
-import org.springframework.integration.config.IntegrationConverter;
 import org.springframework.integration.file.filters.CompositeFileListFilter;
 import org.springframework.integration.ftp.filters.FtpLastModifiedFileListFilter;
+import org.springframework.integration.ftp.filters.FtpPersistentAcceptOnceFileListFilter;
 import org.springframework.integration.ftp.filters.FtpSimplePatternFileListFilter;
 import org.springframework.integration.ftp.inbound.FtpInboundFileSynchronizer;
 import org.springframework.integration.ftp.inbound.FtpInboundFileSynchronizingMessageSource;
 import org.springframework.integration.ftp.session.DefaultFtpSessionFactory;
+import org.springframework.integration.metadata.PropertiesPersistingMetadataStore;
 import org.springframework.messaging.PollableChannel;
 
 import java.io.File;
@@ -48,6 +49,17 @@ public class FtpConfig {
     }
 
     /**
+     * 파일 메타데이터를 관리하는 PropertiesPersistingMetadataStore를 설정하여
+     * 이전에 처리된 파일을 추적하고 중복 파일을 방지합니다.
+     */
+    @Bean
+    public PropertiesPersistingMetadataStore metadataStore() {
+        PropertiesPersistingMetadataStore metadataStore = new PropertiesPersistingMetadataStore();
+        metadataStore.setBaseDirectory("metadata/store"); // 메타데이터 저장 경로 설정
+        return metadataStore;
+    }
+
+    /**
      * FTP 서버에서 주기적으로 파일을 동기화하기 위한 FtpInboundFileSynchronizer 빈을 생성합니다.
      * 특정 파일 확장자와 마지막 수정 시간 조건을 적용하여 파일을 필터링하고, 동기화 규칙을 설정합니다.
      *
@@ -60,14 +72,10 @@ public class FtpConfig {
         synchronizer.setRemoteDirectory(ftpProperties.remoteDirectory()); // 원격 FTP 서버의 디렉토리 경로 설정
 
         // 파일 필터링 설정: 확장자와 수정 시간 기준
-        CompositeFileListFilter<FTPFile> compositeFilter = new CompositeFileListFilter<>(
-                List.of(
-                        // 특정 파일 확장자 필터링 (.rff 및 .lrf 파일만 가져옴)
-                        new FtpSimplePatternFileListFilter("*.{rff, lrf}"),
-                        // 마지막 수정된 지 5분이 지난 파일만 가져오도록 설정
-                        new FtpLastModifiedFileListFilter(Duration.ofMinutes(5))
-                )
-        );
+        CompositeFileListFilter<FTPFile> compositeFilter = new CompositeFileListFilter<>();
+        compositeFilter.addFilter(new FtpSimplePatternFileListFilter("*.{rff, lrf}"));
+        compositeFilter.addFilter(new FtpLastModifiedFileListFilter(Duration.ofMinutes(5)));
+        compositeFilter.addFilter(new FtpPersistentAcceptOnceFileListFilter(metadataStore(), "remoteFiles_"));
 
         // 필터를 동기화 설정에 추가
         synchronizer.setFilter(compositeFilter);
@@ -85,7 +93,17 @@ public class FtpConfig {
         FtpInboundFileSynchronizingMessageSource source = new FtpInboundFileSynchronizingMessageSource(ftpInboundFileSynchronizer());
         source.setLocalDirectory(new File(ftpProperties.localDirectory())); // 동기화된 파일을 저장할 로컬 디렉토리
         source.setAutoCreateLocalDirectory(true); // 로컬 디렉토리가 없을 경우 자동 생성
-        source.setMaxFetchSize(10); // 한 번에 가져올 최대 파일 개수 설정
+        source.setMaxFetchSize(20); // 한 번에 가져올 최대 파일 개수 설정
         return source;
+    }
+
+    /**
+     * 파일 처리 큐 채널을 설정합니다. 최대 20개의 메시지만 큐에 저장하여 메모리 사용을 제어합니다.
+     *
+     * @return PollableChannel QueueChannel 객체
+     */
+    @Bean
+    public PollableChannel ftpChannel() {
+        return new QueueChannel(20); // 한 번에 최대 20개의 파일을 큐에 저장
     }
 }

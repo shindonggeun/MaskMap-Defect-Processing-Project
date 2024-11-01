@@ -6,14 +6,18 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.Pollers;
 import org.springframework.integration.ftp.inbound.FtpInboundFileSynchronizingMessageSource;
+import org.springframework.messaging.PollableChannel;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.concurrent.Executors;
 
 /**
@@ -27,6 +31,8 @@ import java.util.concurrent.Executors;
 public class FtpIntegrationFlowConfig {
 
     private final FileProcessingServiceImpl fileProcessingService;
+    private final PollableChannel ftpChannel; // QueueChannel로 설정된 FTP 채널
+    private final TaskExecutor taskExecutor;
 
     /**
      * FTP 폴링 및 파일 처리를 구성하는 IntegrationFlow 빈을 정의합니다.
@@ -39,9 +45,10 @@ public class FtpIntegrationFlowConfig {
     @Bean
     public IntegrationFlow ftpIntegrationFlow(FtpInboundFileSynchronizingMessageSource ftpMessageSource) {
         return IntegrationFlow.from(ftpMessageSource,
-                        config -> config.poller(Pollers.fixedDelay(300000) // 5분마다 FTP 서버를 감지하여 새 파일을 가져옴
-                                .maxMessagesPerPoll(10) // 한 번의 폴링에서 최대 10개의 파일을 처리
-                                .taskExecutor(taskExecutor()))) // 병렬 처리 활성화
+                        config -> config.poller(Pollers.fixedDelay(Duration.ofMinutes(1)) // 1분마다 FTP 서버를 감지하여 새 파일을 가져옴
+                                .maxMessagesPerPoll(20) // 한 번의 폴링에서 최대 20개의 파일을 처리
+                                .taskExecutor(taskExecutor))) // 병렬 처리 활성화
+                .channel(ftpChannel) // 파일을 큐 채널로 전송
                 .split() // 가져온 파일들을 개별 메시지로 분리
                 .channel(c -> c.executor(Executors.newCachedThreadPool())) // 각 파일을 병렬로 처리
                 .handle(message -> {
@@ -52,6 +59,13 @@ public class FtpIntegrationFlowConfig {
                     try {
                         // 파일 경로를 FileProcessingService에 전달하여 파일을 처리
                         FileData result = fileProcessingService.processFile(filePath);
+                        // 파일 처리 후 삭제
+                        boolean deleted = file.delete();
+                        if (!deleted) {
+                            log.warn("파일 삭제 실패: {}", filePath);
+                        } else {
+                            log.info("파일 처리 후 삭제 성공: {}", filePath);
+                        }
                     } catch (IOException e) {
                         log.error("Error processing file: {}", filePath, e); // 오류 발생 시 로그 출력
                     }
@@ -66,6 +80,7 @@ public class FtpIntegrationFlowConfig {
      * @return SimpleAsyncTaskExecutor가 설정된 TaskExecutor 객체
      */
     @Bean
+    @Primary
     public TaskExecutor taskExecutor() {
         return new SimpleAsyncTaskExecutor("Integration-");
     }
