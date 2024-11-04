@@ -16,10 +16,10 @@ build_spring_server:
     - chmod +x $SERVICE_SPRING_PATH/gradlew  # gradlew 파일에 실행 권한 부여
   script:
     - cd $SERVICE_SPRING_PATH  # 백엔드 경로로 이동
-    - ./gradlew clean assemble  # 프로젝트를 빌드 (클린 빌드)
+    - ./gradlew clean assemble  # 전체 프로젝트 빌드 (모든 서브 모듈 포함)
   artifacts:
     paths:
-      - $SERVICE_SPRING_PATH/build/libs  # 빌드된 결과물을 아티팩트로 저장
+      - "$SERVICE_SPRING_PATH/**/build/libs/*.jar"  # 모든 서브 모듈의 JAR 파일을 아티팩트로 저장
     expire_in: 1 week  # 아티팩트 보존 기간: 1주일 동안 보관
 
 # 백엔드 서버 테스트 작업 정의
@@ -42,5 +42,15 @@ deploy_spring_server:
   script:
     - echo "백엔드 관련 도커 컨테이너 배포 중..."
     - cd $SERVICE_SPRING_PATH
-    - docker-compose -f docker-compose.yml --env-file .env-backend down --volumes  # 환경 변수 파일 적용하여 기존 컨테이너 및 볼륨 삭제
-    - docker-compose -f docker-compose.yml --env-file .env-backend up --build -d  # 도커 컴포즈로 배포
+    - docker-compose \
+      -f docker-compose.yml \
+      -f API-Gateway/docker-compose-api-gateway.yml \
+      -f Service-Discovery/docker-compose-service-discovery.yml \
+      -f FTP-Service/docker-compose-ftp-service.yml \
+      --env-file .env-backend down --volumes
+    - docker-compose \
+      -f docker-compose.yml \
+      -f API-Gateway/docker-compose-api-gateway.yml \
+      -f Service-Discovery/docker-compose-service-discovery.yml \
+      -f FTP-Service/docker-compose-ftp-service.yml \
+      --env-file .env-backend up --build -d

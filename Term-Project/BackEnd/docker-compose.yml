@@ -1,7 +1,7 @@
-include:
-  - API-Gateway/docker-compose-api-gateway.yml
-  - FTP-Service/docker-compose-ftp-service.yml
-  - Service-Discovery/docker-compose-service-discovery.yml
+#include:
+#  - API-Gateway/docker-compose-api-gateway.yml
+#  - FTP-Service/docker-compose-ftp-service.yml
+#  - Service-Discovery/docker-compose-service-discovery.yml
 
 networks:
   term-project-net:
