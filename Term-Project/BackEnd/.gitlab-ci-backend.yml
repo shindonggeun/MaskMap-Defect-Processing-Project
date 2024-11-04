@@ -42,9 +42,6 @@ deploy_spring_server:
   script:
     - echo "백엔드 관련 도커 컨테이너 배포 중..."
     - cd $SERVICE_SPRING_PATH
-    - docker-compose -f API-Gateway/docker-compose-api-gateway.yml --env-file .env-backend down --volumes
-    - docker-compose -f Service-Discovery/docker-compose-service-discovery.yml --env-file .env-backend down --volumes
-    - docker-compose -f FTP-Service/docker-compose-ftp-service.yml --env-file .env-backend down --volumes
     - docker-compose -f API-Gateway/docker-compose-api-gateway.yml --env-file .env-backend up --build -d
     - docker-compose -f Service-Discovery/docker-compose-service-discovery.yml --env-file .env-backend up --build -d
     - docker-compose -f FTP-Service/docker-compose-ftp-service.yml --env-file .env-backend up --build -d
