@@ -1,15 +1,18 @@
 services:
   service_discovery:
-    container_name: service-discovery
+    container_name: eureka-server
     build:
       context: .
       dockerfile: service-discovery.Dockerfile
     image: service-discovery-img
     restart: always
     ports:
-      - "8761:8761"
+      - "${SERVICE_DISCOVERY_SERVER_PORT}:${SERVICE_DISCOVERY_SERVER_PORT}"
     environment:
-      - TZ=Asia/Seoul
+      - TZ=${TZ}
+      - SERVICE_DISCOVERY_SERVER_PORT=${SERVICE_DISCOVERY_SERVER_PORT}
+      - EUREKA_INSTANCE_HOSTNAME=${EUREKA_INSTANCE_HOSTNAME}
+      - ENABLE_SELF_PRESERVATION=${ENABLE_SELF_PRESERVATION}
     networks:
       - term-project-net
 

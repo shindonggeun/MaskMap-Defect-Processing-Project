@@ -1,0 +1,26 @@
+services:
+  api_gateway:
+    container_name: api-gateway
+    build:
+      context: .
+      dockerfile: api-gateway.Dockerfile
+    image: api-gateway-img
+    restart: always
+    ports:
+      - "${API_GATEWAY_SERVER_PORT}:${API_GATEWAY_SERVER_PORT}"
+    environment:
+      - API_GATEWAY_SERVER_PORT=${API_GATEWAY_SERVER_PORT}
+      - API_GATEWAY_APPLICATION_NAME=${API_GATEWAY_APPLICATION_NAME}
+      - EUREKA_SERVER_URL=${EUREKA_SERVER_URL}
+      - EUREKA_HEALTHCHECK_ENABLED=${EUREKA_HEALTHCHECK_ENABLED}
+      - EUREKA_INSTANCE_PREFER_IP=${EUREKA_INSTANCE_PREFER_IP}
+      - EUREKA_LEASE_RENEWAL_INTERVAL=${EUREKA_LEASE_RENEWAL_INTERVAL}
+      - EUREKA_LEASE_EXPIRATION_DURATION=${EUREKA_LEASE_EXPIRATION_DURATION}
+      - TZ=${TZ}
+    networks:
+      - term-project-net
+
+networks:
+  term-project-net:
+    name: term-project-net
+    driver: bridge

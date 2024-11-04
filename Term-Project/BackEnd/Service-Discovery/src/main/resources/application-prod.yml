@@ -3,11 +3,11 @@ server:
 
 eureka:
   instance:
-    hostname: eureka-server  # 프로덕션 환경의 Eureka 서버 호스트 이름을 설정
+    hostname: ${EUREKA_INSTANCE_HOSTNAME}  # 프로덕션 환경의 Eureka 서버 호스트 이름을 설정
   client:
     register-with-eureka: false   # Eureka 서버는 자체 등록하지 않음
     fetch-registry: false         # 중앙 서버 역할
     service-url:
-      defaultZone: http://eureka-server:8761/eureka/  # 클라이언트가 접근할 기본 URL, DNS나 로드 밸런서 주소 사용 가능
+      defaultZone: ${EUREKA_SERVER_URL}  # 클라이언트가 접근할 기본 URL, DNS나 로드 밸런서 주소 사용 가능
   server:
-    enable-self-preservation: true  # 프로덕션에서는 self-preservation 활성화로 안정성 보장
+    enable-self-preservation: ${ENABLE_SELF_PRESERVATION}  # 프로덕션에서는 self-preservation 활성화로 안정성 보장

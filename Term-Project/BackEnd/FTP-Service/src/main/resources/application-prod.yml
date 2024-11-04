@@ -1,22 +1,23 @@
 server:
-  port: 8081  # FTP-Service의 고유 포트
+  port: ${FTP_SERVER_PORT}  # .env 파일에서 포트를 주입받음
 
 spring:
   application:
-    name: FTP-SERVICE  # Eureka에 등록될 서비스 이름
+    name: ${FTP_SPRING_APPLICATION_NAME}  # .env 파일에서 서비스 이름을 주입받음
 
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://eureka-server:8761/eureka/  # 배포 환경의 Eureka 서버 URL (eureka-server는 DNS, 로드 밸런서, 도커 네트워크 이름 사용 가능)
-    healthcheck:
-      enabled: true  # 배포 환경에서 헬스체크 활성화 (옵션)
-
+      defaultZone: ${EUREKA_SERVER_URL}  # .env 파일에서 Eureka 서버 URL 주입
   instance:
-    prefer-ip-address: false  # IP 주소 대신 호스트 이름을 사용하여 등록
-    leaseRenewalIntervalInSeconds: 10  # Eureka 서버로의 갱신 빈도 설정 (초)
-    leaseExpirationDurationInSeconds: 30  # 만료 시간 설정 (초)
+    prefer-ip-address: ${EUREKA_INSTANCE_PREFER_IP}  # 호스트명 사용 설정
+    leaseRenewalIntervalInSeconds: ${EUREKA_LEASE_RENEWAL_INTERVAL}  # 갱신 빈도
+    leaseExpirationDurationInSeconds: ${EUREKA_LEASE_EXPIRATION_DURATION}  # 만료 시간
 
-logging:
-  level:
-    root: INFO  # 기본 로그 레벨 (필요 시 `DEBUG`로 변경 가능)
+ftp:
+  host: ${FTP_HOST}  # FTP 서버 정보 주입
+  port: ${FTP_PORT}
+  username: ${FTP_USERNAME}
+  password: ${FTP_PASSWORD}
+  remote-directory: ${FTP_REMOTE_DIRECTORY}
+  local-directory: ${FTP_LOCAL_DIRECTORY}
