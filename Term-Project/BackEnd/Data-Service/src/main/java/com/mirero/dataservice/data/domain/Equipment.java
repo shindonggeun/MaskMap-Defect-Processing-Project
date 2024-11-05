@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Comment;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Builder
@@ -24,4 +26,16 @@ public class Equipment extends BaseEntity {
     @Comment("일자별 파일명")
     @Column(columnDefinition = "VARCHAR(60)", nullable = false)
     private String fileName;
+
+    @OneToMany(mappedBy = "equipment", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ClassifyType> classifyTypeList;
+
+    @OneToMany(mappedBy = "equipment", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Area> areaList;
+
+    @OneToMany(mappedBy = "equipment", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Defect> defectList;
+
+    @OneToMany(mappedBy = "equipment", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AlignmentPoint> alignmentPointList;
 }
