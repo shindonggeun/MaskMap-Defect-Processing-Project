@@ -1,6 +1,6 @@
 package com.mirero.ftpservice.ftp.infrastructure.config;
 
-import com.mirero.ftpservice.ftp.application.port.in.dto.FileData;
+import com.mirero.ftpservice.ftp.adaptor.in.web.dto.FileData;
 import com.mirero.ftpservice.ftp.application.service.FileProcessingServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +13,6 @@ import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.Pollers;
 import org.springframework.integration.ftp.inbound.FtpInboundFileSynchronizingMessageSource;
 import org.springframework.messaging.PollableChannel;
-import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
