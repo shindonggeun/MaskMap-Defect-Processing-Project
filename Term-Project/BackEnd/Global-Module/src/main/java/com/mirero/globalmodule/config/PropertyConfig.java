@@ -1,4 +1,4 @@
-package com.mirero.ftpservice.ftp.infrastructure.config;
+package com.mirero.globalmodule.config;
 
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.Configuration;
