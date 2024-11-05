@@ -3,6 +3,9 @@ dependencies {
 
 	// Jasypt (Java Simplified Encryption)
 	implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5'
+
+	// Kafka
+	implementation 'org.springframework.kafka:spring-kafka'
 }
 
 bootJar { enabled = false }
