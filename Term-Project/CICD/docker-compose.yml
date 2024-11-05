@@ -5,7 +5,7 @@ services:
     container_name: postgresql
     restart: always
     ports:
-      - "5432:5432"
+      - "${POSTGRESQL_PORT}:${POSTGRESQL_PORT}"
     environment:
       POSTGRESQL_USERNAME: ${POSTGRESQL_USERNAME}  # PostgreSQL 사용자 이름
       POSTGRESQL_PASSWORD: ${POSTGRESQL_PASSWORD}  # PostgreSQL 사용자 비밀번호
@@ -14,6 +14,106 @@ services:
       - postgres_data:/bitnami/postgresql  # 데이터 영속성을 위한 볼륨 설정
     networks:
       - term-project-net
+
+  # Zookeeper 설정
+  zookeeper_service:
+    image: confluentinc/cp-zookeeper:latest
+    container_name: zookeeper
+    ports:
+      - "${ZOOKEEPER_CLIENT_PORT}:${ZOOKEEPER_CLIENT_PORT}"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: ${ZOOKEEPER_CLIENT_PORT}
+      ZOOKEEPER_TICK_TIME: ${ZOOKEEPER_TICK_TIME}
+    networks:
+      - term-project-net
+
+  # kafka-1 설정
+  kafka-1_service:
+    image: confluentinc/cp-kafka:latest
+    container_name: kafka-1
+    depends_on:
+      - zookeeper_service
+    ports:
+      - "${KAFKA_1_PORT}:${KAFKA_1_PORT}"
+    environment:
+      TZ: ${TZ}
+      KAFKA_BROKER_ID: ${KAFKA_BROKER_ID_1}
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:${ZOOKEEPER_CLIENT_PORT}
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka-1:${KAFKA_INTERNAL_PORT_1},EXTERNAL://localhost:${KAFKA_1_PORT} # Kafka 브로커의 내부 및 외부 통신 포트 설정: INTERNAL은 브로커 간 통신용, EXTERNAL은 외부 클라이언트용
+      KAFKA_DEFAULT_REPLICATION_FACTOR: ${KAFKA_DEFAULT_REPLICATION_FACTOR} # 자동으로 생성되는 topic의 기본 복제 수 (브로커수)
+      KAFKA_NUM_PARTITIONS: ${KAFKA_NUM_PARTITIONS}
+      KAFKA_LOG_RETENTION_HOURS: ${KAFKA_LOG_RETENTION_HOURS} # 메시지 보존 기간 설정
+      KAFKA_COMPRESSION_TYPE: ${KAFKA_COMPRESSION_TYPE} # 메시지 압축 방식 설정
+      KAFKA_SEGMENT_BYTES: ${KAFKA_SEGMENT_BYTES} # 로그 세그먼트 크기
+      KAFKA_HEAP_OPTS: ${KAFKA_HEAP_OPTS} # JVM 힙 메모리 설정
+    networks:
+      - term-project-net
+
+  # kafka-2 설정
+  kafka-2_service:
+    image: confluentinc/cp-kafka:latest
+    container_name: kafka-2
+    depends_on:
+      - zookeeper_service
+    ports:
+      - "${KAFKA_2_PORT}:${KAFKA_2_PORT}"
+    environment:
+      TZ: ${TZ}
+      KAFKA_BROKER_ID: ${KAFKA_BROKER_ID_2}
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:${ZOOKEEPER_CLIENT_PORT}
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka-2:${KAFKA_INTERNAL_PORT_2},EXTERNAL://localhost:${KAFKA_2_PORT}
+      KAFKA_DEFAULT_REPLICATION_FACTOR: ${KAFKA_DEFAULT_REPLICATION_FACTOR}
+      KAFKA_NUM_PARTITIONS: ${KAFKA_NUM_PARTITIONS}
+      KAFKA_LOG_RETENTION_HOURS: ${KAFKA_LOG_RETENTION_HOURS}
+      KAFKA_COMPRESSION_TYPE: ${KAFKA_COMPRESSION_TYPE}
+      KAFKA_SEGMENT_BYTES: ${KAFKA_SEGMENT_BYTES} 
+      KAFKA_HEAP_OPTS: ${KAFKA_HEAP_OPTS}
+    networks:
+      - term-project-net
+
+  # kafka-3 설정
+  kafka-3_service:
+    image: confluentinc/cp-kafka:latest
+    container_name: kafka-3
+    depends_on:
+      - zookeeper_service
+    ports:
+      - "${KAFKA_3_PORT}:${KAFKA_3_PORT}"
+    environment:
+      TZ: ${TZ}
+      KAFKA_BROKER_ID: ${KAFKA_BROKER_ID_3}
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:${ZOOKEEPER_CLIENT_PORT}
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka-3:${KAFKA_INTERNAL_PORT_3},EXTERNAL://localhost:${KAFKA_3_PORT}
+      KAFKA_DEFAULT_REPLICATION_FACTOR: ${KAFKA_DEFAULT_REPLICATION_FACTOR}
+      KAFKA_NUM_PARTITIONS: ${KAFKA_NUM_PARTITIONS}
+      KAFKA_LOG_RETENTION_HOURS: ${KAFKA_LOG_RETENTION_HOURS}
+      KAFKA_COMPRESSION_TYPE: ${KAFKA_COMPRESSION_TYPE}
+      KAFKA_SEGMENT_BYTES: ${KAFKA_SEGMENT_BYTES} 
+      KAFKA_HEAP_OPTS: ${KAFKA_HEAP_OPTS}
+    networks:
+      - term-project-net
+
+  # kafka-ui 설정
+  kafka-ui_service:
+    image: provectuslabs/kafka-ui
+    container_name: kafka-ui
+    ports:
+      - "${KAFKA_UI_PORT}:8080"
+    restart: always
+    environment:
+      TZ: ${TZ}
+      KAFKA_CLUSTERS_0_NAME: ${KAFKA_CLUSTER_NAME}
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: ${KAFKA_UI_BOOTSTRAP_SERVERS}
+      KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:${ZOOKEEPER_CLIENT_PORT}
+    networks:
+      - term-project-net
+
 
 volumes:
   postgres_data:

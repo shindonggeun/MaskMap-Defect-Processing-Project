@@ -20,7 +20,7 @@ deploy_infra:
     - |
       if [ -z "${isPostgresRunning}" ]; then
         echo "PostgreSQL 컨테이너가 실행 중이 아닙니다. Docker Compose로 PostgreSQL 실행하겠습니다.";
-        docker-compose -f docker-compose.yml --env-file .env-postgresql up --build -d postgresql_service;
+        docker-compose -f docker-compose.yml --env-file .env-infra up --build -d postgresql_service;
       else
         echo "PostgreSQL 컨테이너가 이미 실행 중입니다.";
       fi
