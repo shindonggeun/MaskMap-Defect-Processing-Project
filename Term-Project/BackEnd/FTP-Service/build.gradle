@@ -1,4 +1,6 @@
 dependencies {
+	implementation project(":Global-Module")
+
 	// Eureka 클라이언트
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 
