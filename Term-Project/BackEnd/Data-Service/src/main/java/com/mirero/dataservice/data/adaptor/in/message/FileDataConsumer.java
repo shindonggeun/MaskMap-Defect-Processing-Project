@@ -1,8 +1,10 @@
 package com.mirero.dataservice.data.adaptor.in.message;
 
+import com.mirero.dataservice.data.adaptor.in.web.area.dto.AreaInfo;
 import com.mirero.dataservice.data.adaptor.in.web.equipment.dto.EquipmentInfo;
 import com.mirero.dataservice.data.adaptor.in.web.maskMap.dto.MaskMapInfo;
 import com.mirero.dataservice.data.adaptor.in.web.recipeInspectionSummary.dto.RecipeInspectionSummaryInfo;
+import com.mirero.dataservice.data.application.port.in.area.AreaCommandService;
 import com.mirero.dataservice.data.application.port.in.equipment.EquipmentCommandService;
 import com.mirero.dataservice.data.application.port.in.maskMap.MaskMapCommandService;
 import com.mirero.dataservice.data.application.port.in.recipeInspectionSummary.RecipeInspectionSummaryCommandService;
@@ -14,6 +16,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -23,6 +27,7 @@ public class FileDataConsumer {
     private final EquipmentCommandService equipmentCommandService;
     private final RecipeInspectionSummaryCommandService recipeInspectionSummaryCommandService;
     private final MaskMapCommandService maskMapCommandService;
+    private final AreaCommandService areaCommandService;
 
     @KafkaListener(topics = KAFKA_TOPIC)
     public void consumeFileData(FileData fileData) {
@@ -35,7 +40,7 @@ public class FileDataConsumer {
             RecipeInspectionSummaryInfo recipeInspectionSummaryInfo =
                     recipeInspectionSummaryCommandService.saveRecipeInspectionSummary(lrfFileData, equipmentInfo.id());
 
-            log.info("LRF 관련 데이터 중 레시피 검사 요약 정보: {}", recipeInspectionSummaryInfo);
+            List<AreaInfo> areaInfoList = areaCommandService.saveAreaList(lrfFileData, equipmentInfo.id());
         } else if (fileData instanceof RffFileData rffFileData) {
             MaskMapInfo maskMapInfo = maskMapCommandService.saveMaskMap(rffFileData, equipmentInfo.id());
 
