@@ -1,5 +1,6 @@
 package com.mirero.globalmodule.config;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
@@ -9,6 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
  */
 @Configuration
 @EnableJpaAuditing
+@ConditionalOnProperty(prefix = "spring.jpa", name = "enabled", havingValue = "true", matchIfMissing = true)
 public class JpaAuditConfig {
     // 이 클래스는 설정을 활성화하는 어노테이션을 포함합니다.
 }

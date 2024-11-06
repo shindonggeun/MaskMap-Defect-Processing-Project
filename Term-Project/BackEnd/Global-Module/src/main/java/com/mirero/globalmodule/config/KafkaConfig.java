@@ -45,7 +45,6 @@ public class KafkaConfig {
         return new KafkaTemplate<>(producerFactory());
     }
 
-
     // Consumer 설정
     @Bean
     public ConsumerFactory<String, Object> consumerFactory() {
