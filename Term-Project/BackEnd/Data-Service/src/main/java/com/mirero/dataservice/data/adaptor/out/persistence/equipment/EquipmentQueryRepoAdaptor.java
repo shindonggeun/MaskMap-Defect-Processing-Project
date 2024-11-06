@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -19,7 +20,7 @@ public class EquipmentQueryRepoAdaptor implements EquipmentQueryRepoPort {
     }
 
     @Override
-    public Optional<Equipment> findById(Long id) {
+    public Optional<Equipment> findById(UUID id) {
         return equipmentQueryRepository.findById(id);
     }
 

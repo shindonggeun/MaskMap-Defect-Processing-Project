@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Comment;
 
+import java.util.UUID;
+
 @Entity
 @Getter
 @Builder
@@ -14,9 +16,8 @@ public class AlignmentPoint extends BaseEntity {
 
     @Id
     @Comment("정렬 포인트 아이디")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(columnDefinition = "BIGINT")
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Comment("순서 번호")
     @Column(nullable = false)
@@ -24,11 +25,11 @@ public class AlignmentPoint extends BaseEntity {
 
     @Comment("X 좌표")
     @Column(nullable = false)
-    private Long x;
+    private Double x;
 
     @Comment("Y 좌표")
     @Column(nullable = false)
-    private Long y;
+    private Double y;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "equipment_id")

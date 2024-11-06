@@ -1,9 +1,11 @@
 package com.mirero.dataservice.data.adaptor.in.message;
 
+import com.mirero.dataservice.data.adaptor.in.web.alignmentPoint.dto.AlignmentPointInfo;
 import com.mirero.dataservice.data.adaptor.in.web.area.dto.AreaInfo;
 import com.mirero.dataservice.data.adaptor.in.web.equipment.dto.EquipmentInfo;
 import com.mirero.dataservice.data.adaptor.in.web.maskMap.dto.MaskMapInfo;
 import com.mirero.dataservice.data.adaptor.in.web.recipeInspectionSummary.dto.RecipeInspectionSummaryInfo;
+import com.mirero.dataservice.data.application.port.in.alignmentPoint.AlignmentPointCommandService;
 import com.mirero.dataservice.data.application.port.in.area.AreaCommandService;
 import com.mirero.dataservice.data.application.port.in.equipment.EquipmentCommandService;
 import com.mirero.dataservice.data.application.port.in.maskMap.MaskMapCommandService;
@@ -28,6 +30,7 @@ public class FileDataConsumer {
     private final RecipeInspectionSummaryCommandService recipeInspectionSummaryCommandService;
     private final MaskMapCommandService maskMapCommandService;
     private final AreaCommandService areaCommandService;
+    private final AlignmentPointCommandService alignmentPointCommandService;
 
     @KafkaListener(topics = KAFKA_TOPIC)
     public void consumeFileData(FileData fileData) {
@@ -44,7 +47,8 @@ public class FileDataConsumer {
         } else if (fileData instanceof RffFileData rffFileData) {
             MaskMapInfo maskMapInfo = maskMapCommandService.saveMaskMap(rffFileData, equipmentInfo.id());
 
-            log.info("RFF 관련 데이터 중 마스크맵 요약 정보: {}", maskMapInfo);
+            List<AlignmentPointInfo> alignmentPointInfoList =
+                    alignmentPointCommandService.saveAlignmentPointList(rffFileData, equipmentInfo.id());
         }
 
     }

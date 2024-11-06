@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -20,7 +22,7 @@ public class RecipeInspectionSummaryCommandServiceImpl implements RecipeInspecti
     private final RecipeInspectionSummaryMapper mapper;
 
     @Override
-    public RecipeInspectionSummaryInfo saveRecipeInspectionSummary(LrfFileData lrfFileData, Long equipmentId) {
+    public RecipeInspectionSummaryInfo saveRecipeInspectionSummary(LrfFileData lrfFileData, UUID equipmentId) {
         RecipeInspectionSummaryRequest request = mapper.toRecipeInspectionSummaryRequest(lrfFileData, equipmentId);
         RecipeInspectionSummary entity = mapper.toEntity(request);
         RecipeInspectionSummary savedEntity = commandRepoPort.save(entity);

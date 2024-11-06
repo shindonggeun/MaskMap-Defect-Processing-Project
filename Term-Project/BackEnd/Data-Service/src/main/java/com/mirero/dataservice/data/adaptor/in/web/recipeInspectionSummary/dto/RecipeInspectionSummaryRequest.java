@@ -3,10 +3,11 @@ package com.mirero.dataservice.data.adaptor.in.web.recipeInspectionSummary.dto;
 import lombok.Builder;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Builder
 public record RecipeInspectionSummaryRequest(
-        long equipmentId,
+        UUID equipmentId,
         String maskId,
         String lotId,
         String stepId,

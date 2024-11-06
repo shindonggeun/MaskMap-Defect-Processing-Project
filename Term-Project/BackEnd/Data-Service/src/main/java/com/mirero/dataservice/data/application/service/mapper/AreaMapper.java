@@ -8,6 +8,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
@@ -27,7 +28,7 @@ public interface AreaMapper {
                 .collect(Collectors.toList());
     }
 
-    default List<AreaRequest> toAreaRequestList(LrfFileData lrfFileData, Long equipmentId) {
+    default List<AreaRequest> toAreaRequestList(LrfFileData lrfFileData, UUID equipmentId) {
         return lrfFileData.areaInformationList().stream()
                 .map(areaInfo -> AreaRequest.builder()
                         .equipmentId(equipmentId)

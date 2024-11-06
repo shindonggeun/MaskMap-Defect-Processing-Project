@@ -2,9 +2,11 @@ package com.mirero.dataservice.data.adaptor.in.web.maskMap.dto;
 
 import lombok.Builder;
 
+import java.util.UUID;
+
 @Builder
 public record MaskMapRequest(
-        long equipmentId,
+        UUID equipmentId,
         double maskWidth,
         double maskHeight,
         double pixelWidth,

@@ -1,7 +1,9 @@
 package com.mirero.dataservice.data.adaptor.in.web.equipment.dto;
 
+import java.util.UUID;
+
 public record EquipmentInfo(
-        long id,
+        UUID id,
         String fileName
 ) {
 }

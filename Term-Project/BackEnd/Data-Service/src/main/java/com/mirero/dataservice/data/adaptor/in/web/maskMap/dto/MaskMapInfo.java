@@ -1,7 +1,9 @@
 package com.mirero.dataservice.data.adaptor.in.web.maskMap.dto;
 
+import java.util.UUID;
+
 public record MaskMapInfo(
-        long id,
+        UUID id,
         double maskWidth,
         double maskHeight,
         double pixelWidth,

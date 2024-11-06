@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -22,7 +23,7 @@ public class AreaCommandServiceImpl implements AreaCommandService {
     private final AreaMapper mapper;
 
     @Override
-    public List<AreaInfo> saveAreaList(LrfFileData lrfFileData, Long equipmentId) {
+    public List<AreaInfo> saveAreaList(LrfFileData lrfFileData, UUID equipmentId) {
         List<AreaRequest> requestList = mapper.toAreaRequestList(lrfFileData, equipmentId);
         List<Area> entityList = mapper.toEntityList(requestList);
         List<Area> savedEntityList = commandRepoPort.saveAll(entityList);

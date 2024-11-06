@@ -6,6 +6,7 @@ import lombok.*;
 import org.hibernate.annotations.Comment;
 
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -19,9 +20,8 @@ public class Equipment extends BaseEntity {
 
     @Id
     @Comment("장비 정보 아이디")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(columnDefinition = "BIGINT")
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Comment("일자별 파일명")
     @Column(columnDefinition = "VARCHAR(60)", nullable = false)

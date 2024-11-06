@@ -6,6 +6,7 @@ import lombok.*;
 import org.hibernate.annotations.Comment;
 
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -16,9 +17,8 @@ public class ClassifyType extends BaseEntity {
 
     @Id
     @Comment("분류 정보 아이디")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(columnDefinition = "BIGINT")
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Comment("분류 이름")
     @Column(nullable = false)

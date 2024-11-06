@@ -7,6 +7,8 @@ import com.mirero.globalmodule.common.dto.RffFileData;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.UUID;
+
 @Mapper(componentModel = "spring")
 public interface MaskMapMapper {
 
@@ -16,7 +18,7 @@ public interface MaskMapMapper {
 
     MaskMapInfo toMaskMapInfo(MaskMap maskMap);
 
-    default MaskMapRequest toMaskMapRequest(RffFileData rffFileData, Long equipmentId) {
+    default MaskMapRequest toMaskMapRequest(RffFileData rffFileData, UUID equipmentId) {
         return MaskMapRequest.builder()
                 .equipmentId(equipmentId)
                 .maskWidth(rffFileData.maskSize().width())

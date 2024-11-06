@@ -1,9 +1,10 @@
 package com.mirero.dataservice.data.adaptor.in.web.recipeInspectionSummary.dto;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public record RecipeInspectionSummaryInfo(
-        long id,
+        UUID id,
         String maskId,
         String lotId,
         String stepId,

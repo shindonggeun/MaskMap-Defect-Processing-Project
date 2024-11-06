@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Comment;
 
+import java.util.UUID;
+
 @Entity
 @Getter
 @Builder
@@ -14,9 +16,8 @@ public class MaskMap extends BaseEntity {
 
     @Id
     @Comment("마스크 맵 정보 아이디")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(columnDefinition = "BIGINT")
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Comment("마스크 크기 너비")
     @Column(nullable = false)

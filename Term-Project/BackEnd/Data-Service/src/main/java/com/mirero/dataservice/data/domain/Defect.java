@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Comment;
 
+import java.util.UUID;
+
 @Entity
 @Getter
 @Builder
@@ -14,9 +16,8 @@ public class Defect extends BaseEntity {
 
     @Id
     @Comment("결함 정보 아이디")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(columnDefinition = "BIGINT")
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Comment("결함 순서 번호")
     @Column(nullable = false)

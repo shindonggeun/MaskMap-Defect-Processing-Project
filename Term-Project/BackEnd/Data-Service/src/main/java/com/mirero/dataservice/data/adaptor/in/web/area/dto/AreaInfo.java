@@ -1,7 +1,9 @@
 package com.mirero.dataservice.data.adaptor.in.web.area.dto;
 
+import java.util.UUID;
+
 public record AreaInfo(
-        long id,
+        UUID id,
         double dieSizeWidth,
         double dieSizeHeight,
         double diePitchX,

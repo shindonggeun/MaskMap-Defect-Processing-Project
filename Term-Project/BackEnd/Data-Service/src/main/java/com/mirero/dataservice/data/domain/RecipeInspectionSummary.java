@@ -6,6 +6,7 @@ import lombok.*;
 import org.hibernate.annotations.Comment;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -16,9 +17,8 @@ public class RecipeInspectionSummary extends BaseEntity {
 
     @Id
     @Comment("레시피 검사 요약 정보 아이디")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(columnDefinition = "BIGINT")
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Comment("마스크 아이디")
     @Column(nullable = false)

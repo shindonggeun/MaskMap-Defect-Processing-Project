@@ -7,6 +7,8 @@ import com.mirero.globalmodule.common.dto.LrfFileData;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.UUID;
+
 @Mapper(componentModel = "spring")
 public interface RecipeInspectionSummaryMapper {
 
@@ -17,7 +19,7 @@ public interface RecipeInspectionSummaryMapper {
     RecipeInspectionSummaryInfo toRecipeInspectionSummaryInfo(RecipeInspectionSummary recipeInspectionSummary);
 
     // LrfFileData를 RecipeInspectionSummaryRequest로 매핑하기 위한 커스텀 메서드
-    default RecipeInspectionSummaryRequest toRecipeInspectionSummaryRequest(LrfFileData lrfFileData, Long equipmentId) {
+    default RecipeInspectionSummaryRequest toRecipeInspectionSummaryRequest(LrfFileData lrfFileData, UUID equipmentId) {
         return RecipeInspectionSummaryRequest.builder()
                 .equipmentId(equipmentId)
                 .maskId(lrfFileData.recipeBasicInformation().maskId())
