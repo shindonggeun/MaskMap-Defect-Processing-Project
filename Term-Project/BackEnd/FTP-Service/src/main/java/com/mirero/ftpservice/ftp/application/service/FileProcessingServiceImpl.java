@@ -19,13 +19,20 @@ public class FileProcessingServiceImpl implements FileProcessingService {
     @Override
     public FileData processFile(String filePath) throws IOException {
         String fileExtension = getFileExtension(filePath);
+        String fileName = getFileNameWithoutExtension(filePath);
         log.info("Processing file: {}", filePath);
         Parser<? extends FileData> parser = parserFactory.getParser(fileExtension);
-        return parser.parse(filePath);
+        return parser.parse(filePath, fileName, fileExtension);
     }
 
     private String getFileExtension(String filePath) {
         int lastIndexOf = filePath.lastIndexOf(".");
         return filePath.substring(lastIndexOf + 1);
+    }
+
+    private String getFileNameWithoutExtension(String filePath) {
+        int lastIndexOfSlash = Math.max(filePath.lastIndexOf("\\"), filePath.lastIndexOf("/"));
+        int dotIndex = filePath.lastIndexOf(".");
+        return filePath.substring(lastIndexOfSlash + 1, dotIndex);
     }
 }

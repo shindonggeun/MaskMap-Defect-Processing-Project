@@ -2,6 +2,7 @@ package com.mirero.ftpservice.ftp.infrastructure.config;
 
 import com.mirero.ftpservice.ftp.adaptor.in.web.dto.FileData;
 import com.mirero.ftpservice.ftp.application.service.FileProcessingServiceImpl;
+import com.mirero.globalmodule.component.kafka.KafkaProducer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -32,6 +33,8 @@ public class FtpIntegrationFlowConfig {
     private final FileProcessingServiceImpl fileProcessingService;
     private final PollableChannel ftpChannel; // QueueChannel로 설정된 FTP 채널
     private final TaskExecutor taskExecutor;
+    private final KafkaProducer kafkaProducer;
+    private static final String KAFKA_TOPIC = "pasing-data-topic";
 
     /**
      * FTP 폴링 및 파일 처리를 구성하는 IntegrationFlow 빈을 정의합니다.
@@ -58,6 +61,9 @@ public class FtpIntegrationFlowConfig {
                     try {
                         // 파일 경로를 FileProcessingService에 전달하여 파일을 처리
                         FileData result = fileProcessingService.processFile(filePath);
+
+                        kafkaProducer.publish(KAFKA_TOPIC, result);
+
                         // 파일 처리 후 삭제
                         boolean deleted = file.delete();
                         if (!deleted) {

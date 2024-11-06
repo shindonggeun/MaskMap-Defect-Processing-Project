@@ -18,7 +18,7 @@ public class LrfFileParser implements Parser<LrfFileData> {
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 
     @Override
-    public LrfFileData parse(String filePath) throws IOException {
+    public LrfFileData parse(String filePath, String fileName, String fileExtension) throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             RecipeBasicInformation recipeBasicInformation = null;
@@ -50,7 +50,7 @@ public class LrfFileParser implements Parser<LrfFileData> {
             }
 
             int defectCount = defectList.size();
-            return new LrfFileData(recipeBasicInformation, maskInformation, areaInformationList,
+            return new LrfFileData(fileName, fileExtension, recipeBasicInformation, maskInformation, areaInformationList,
                     resultBasicInformation, inspectionSummary, classifyTypeInformationList, defectList, defectCount);
         }
     }

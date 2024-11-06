@@ -22,7 +22,7 @@ public class FTPController {
 
     @PostMapping("/file/process")
     public ResponseEntity<FileData> processFile(@RequestParam("file")MultipartFile file) throws IOException {
-        File tempFile = File.createTempFile("upload", file.getOriginalFilename());
+        File tempFile = File.createTempFile("upload\\", file.getOriginalFilename());
         file.transferTo(tempFile);
 
         FileData result = fileProcessingService.processFile(tempFile.getAbsolutePath());

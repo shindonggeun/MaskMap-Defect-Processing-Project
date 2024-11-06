@@ -21,7 +21,7 @@ public class RffFileParser implements Parser<RffFileData> {
     private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
 
     @Override
-    public RffFileData parse(String filePath) throws IOException {
+    public RffFileData parse(String filePath, String fileName, String fileExtension) throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             LocalDateTime scanTime = null;
@@ -71,7 +71,8 @@ public class RffFileParser implements Parser<RffFileData> {
             }
 
             int defectCount = defectList.size();
-            return new RffFileData(scanTime, maskSize, pixelSize, adjustUnit, classifyInformationList, alignmentPoints, die, defectList, defectCount);
+            return new RffFileData(fileName, fileExtension, scanTime, maskSize, pixelSize, adjustUnit,
+                    classifyInformationList, alignmentPoints, die, defectList, defectCount);
         }
     }
 

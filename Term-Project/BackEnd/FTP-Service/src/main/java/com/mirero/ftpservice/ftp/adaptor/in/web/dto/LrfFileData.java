@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public record LrfFileData(
+        String fileName,
+        String fileExtension,
         RecipeBasicInformation recipeBasicInformation,
         MaskInformation maskInformation,
         List<AreaInformation> areaInformationList,

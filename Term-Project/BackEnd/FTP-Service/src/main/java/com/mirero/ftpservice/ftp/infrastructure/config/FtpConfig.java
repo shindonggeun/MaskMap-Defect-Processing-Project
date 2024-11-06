@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.net.ftp.FTPFile;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.integration.channel.DirectChannel;
+import org.springframework.integration.channel.ExecutorChannel;
 import org.springframework.integration.channel.QueueChannel;
 import org.springframework.integration.config.EnableIntegration;
 import org.springframework.integration.file.filters.CompositeFileListFilter;
@@ -19,7 +21,6 @@ import org.springframework.messaging.PollableChannel;
 
 import java.io.File;
 import java.time.Duration;
-import java.util.List;
 
 /**
  * FTP 서버와 연결하고 주기적으로 파일을 동기화하기 위한 설정 클래스입니다.
@@ -102,7 +103,7 @@ public class FtpConfig {
      *
      * @return PollableChannel QueueChannel 객체
      */
-    @Bean
+    @Bean(name = "ftpChannel")
     public PollableChannel ftpChannel() {
         return new QueueChannel(20); // 한 번에 최대 20개의 파일을 큐에 저장
     }

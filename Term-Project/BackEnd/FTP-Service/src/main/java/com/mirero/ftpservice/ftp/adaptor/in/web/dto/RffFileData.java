@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public record RffFileData(
+        String fileName,
+        String fileExtension,
         LocalDateTime scanTime, // ResultTimestamp 부분
         MaskSize maskSize, // sampleSize 부분
         PixelSize pixelSize, // PixelSize 부분
