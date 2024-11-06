@@ -1,6 +1,6 @@
 package com.mirero.ftpservice.ftp.infrastructure.config;
 
-import com.mirero.ftpservice.ftp.adaptor.in.web.dto.FileData;
+import com.mirero.globalmodule.common.dto.FileData;
 import com.mirero.ftpservice.ftp.application.service.FileProcessingServiceImpl;
 import com.mirero.globalmodule.component.kafka.KafkaProducer;
 import lombok.RequiredArgsConstructor;
@@ -54,15 +54,16 @@ public class FtpIntegrationFlowConfig {
                 .split() // 가져온 파일들을 개별 메시지로 분리
                 .channel(c -> c.executor(Executors.newCachedThreadPool())) // 각 파일을 병렬로 처리
                 .handle(message -> {
-                    log.info("Batch of files before split: {}", message.getPayload());
                     // 파일 감지 즉시 개별 파일 처리 로직 실행
                     File file = (File) message.getPayload();
                     String filePath = file.getAbsolutePath();
+                    String fileNameWithExt = file.getName();
+
                     try {
                         // 파일 경로를 FileProcessingService에 전달하여 파일을 처리
                         FileData result = fileProcessingService.processFile(filePath);
 
-                        kafkaProducer.publish(KAFKA_TOPIC, result);
+                        kafkaProducer.publish(KAFKA_TOPIC, fileNameWithExt, result);
 
                         // 파일 처리 후 삭제
                         boolean deleted = file.delete();

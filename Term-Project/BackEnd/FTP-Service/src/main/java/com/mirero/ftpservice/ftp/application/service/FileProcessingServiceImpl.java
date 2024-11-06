@@ -2,7 +2,7 @@ package com.mirero.ftpservice.ftp.application.service;
 
 import com.mirero.ftpservice.ftp.application.port.in.FileProcessingService;
 import com.mirero.ftpservice.ftp.application.port.in.Parser;
-import com.mirero.ftpservice.ftp.adaptor.in.web.dto.FileData;
+import com.mirero.globalmodule.common.dto.FileData;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
