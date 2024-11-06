@@ -11,7 +11,7 @@ public record RffFileData(
         PixelSize pixelSize, // PixelSize 부분
         double adjustUnit, // LengthUnit 부분 -> um = 1.0, mm = 1000.0, nm = 0.001
         List<ClassifyInformation> classifyInformationList, // ClassLookup 부분
-        List<AlignmentPoint> alignmentPoints, // AlignmentPoints 부분
+        List<AlignmentPoint> alignmentPointList, // AlignmentPoints 부분
         Die die, // DiePitch, DieOrigin 부분
         List<Defect> defectList, // DefectList 부분
         int defectCount // defectList.size()
