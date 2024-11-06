@@ -5,11 +5,38 @@ spring:
   application:
     name: FTP-SERVICE  # 서비스 이름을 설정하여 Eureka에 등록될 때 사용
 
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+
+  jpa:
+    enabled: false  # JPA 비활성화 (Global-Module의 JpaAuditConfig 부분 참고)
+
+  # Kafka Setting
+  kafka:
+    bootstrap-servers: localhost:9092, localhost:9093, localhost:9094
+    consumer:
+      group-id: MireroGroup
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: '*'
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+# Eureka Client Setting
 eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/  # Eureka 서버의 URL
 
+# Ftp Setting
 ftp:
   host: 192.168.70.212
   port: 21
@@ -17,3 +44,7 @@ ftp:
   password: system
   remote-directory: /home/aegis_ftp/AEGIS # FTP 서버의 대상 디렉토리
   local-directory: C:/local-ftp-download # C 드라이브에 파일을 저장할 절대 경로 지정
+
+jasypt:
+  encryptor:
+    key: mirero
