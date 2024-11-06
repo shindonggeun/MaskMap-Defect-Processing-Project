@@ -1,7 +1,7 @@
 package com.mirero.ftpservice.ftp.adaptor.in.web;
 
 import com.mirero.ftpservice.ftp.application.port.in.FileProcessingService;
-import com.mirero.ftpservice.ftp.adaptor.in.web.dto.FileData;
+import com.mirero.globalmodule.common.dto.FileData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

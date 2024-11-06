@@ -26,6 +26,23 @@ spring:
     username: ENC(+Q1Dmjo/weoDbyhoCWE+qg==)  # PostgreSQL 사용자 이름
     password: ENC(znyIsYVlLSCQAaBu0gVwHA==)  # PostgreSQL 비밀번호
 
+  # Kafka Setting
+  kafka:
+    bootstrap-servers: localhost:9092, localhost:9093, localhost:9094
+    consumer:
+      group-id: MireroGroup
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: '*'
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
 eureka:
   client:
     serviceUrl:

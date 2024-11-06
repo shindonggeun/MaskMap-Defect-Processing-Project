@@ -62,11 +62,11 @@ public class Defect extends BaseEntity {
     @Column(nullable = false)
     private Double area;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "equipment_id")
-    private Equipment equipment;
+    @Comment("분류 번호")
+    @Column(nullable = false)
+    private Integer classifyNumber;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "classify_number", referencedColumnName = "number")
+    @JoinColumn(name = "classify_type_id")
     private ClassifyType classifyType;
 }

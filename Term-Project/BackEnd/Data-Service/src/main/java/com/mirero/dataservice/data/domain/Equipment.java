@@ -34,8 +34,5 @@ public class Equipment extends BaseEntity {
     private List<Area> areaList;
 
     @OneToMany(mappedBy = "equipment", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Defect> defectList;
-
-    @OneToMany(mappedBy = "equipment", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AlignmentPoint> alignmentPointList;
 }

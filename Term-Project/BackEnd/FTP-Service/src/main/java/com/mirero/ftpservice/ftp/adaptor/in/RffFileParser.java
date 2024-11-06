@@ -1,7 +1,7 @@
 package com.mirero.ftpservice.ftp.adaptor.in;
 
 import com.mirero.ftpservice.ftp.application.port.in.Parser;
-import com.mirero.ftpservice.ftp.adaptor.in.web.dto.RffFileData;
+import com.mirero.globalmodule.common.dto.RffFileData;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -13,7 +13,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mirero.ftpservice.ftp.adaptor.in.web.dto.RffFileData.*;
+import com.mirero.globalmodule.common.dto.RffFileData.*;
 
 public class RffFileParser implements Parser<RffFileData> {
 
