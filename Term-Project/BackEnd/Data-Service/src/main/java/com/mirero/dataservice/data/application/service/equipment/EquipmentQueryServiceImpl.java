@@ -13,13 +13,13 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class EquipmentQueryServiceImpl implements EquipmentQueryService {
 
-    private final EquipmentQueryRepoPort equipmentQueryRepoPort;
-    private final EquipmentMapper equipmentMapper;
+    private final EquipmentQueryRepoPort queryRepoPort;
+    private final EquipmentMapper mapper;
 
     @Override
     public EquipmentInfo getEquipmentByFileName(String fileName) {
-        return equipmentQueryRepoPort.findByFileName(fileName)
-                .map(equipmentMapper::toEquipmentInfo)
+        return queryRepoPort.findByFileName(fileName)
+                .map(mapper::toEquipmentInfo)
                 .orElseThrow(() -> new RuntimeException("Equipment not found"));
     }
 }

@@ -15,21 +15,21 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class EquipmentCommandServiceImpl implements EquipmentCommandService {
 
-    private final EquipmentQueryRepoPort equipmentQueryRepoPort;
-    private final EquipmentCommandRepoPort equipmentCommandRepoPort;
-    private final EquipmentMapper equipmentMapper;
+    private final EquipmentQueryRepoPort queryRepoPort;
+    private final EquipmentCommandRepoPort commandRepoPort;
+    private final EquipmentMapper mapper;
 
 
     @Override
     public EquipmentInfo getOrCreateEquipment(String fileName) {
-        return equipmentQueryRepoPort.findByFileName(fileName)
-                .map(equipmentMapper::toEquipmentInfo)
+        return queryRepoPort.findByFileName(fileName)
+                .map(mapper::toEquipmentInfo)
                 .orElseGet(() -> {
                     Equipment equipment = Equipment.builder()
                             .fileName(fileName)
                             .build();
-                    Equipment savedEquipment = equipmentCommandRepoPort.save(equipment);
-                    return equipmentMapper.toEquipmentInfo(savedEquipment);
+                    Equipment savedEquipment = commandRepoPort.save(equipment);
+                    return mapper.toEquipmentInfo(savedEquipment);
                 });
     }
 }

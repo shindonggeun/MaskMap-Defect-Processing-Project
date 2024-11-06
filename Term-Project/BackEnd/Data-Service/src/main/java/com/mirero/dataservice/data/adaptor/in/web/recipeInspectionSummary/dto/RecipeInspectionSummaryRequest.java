@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 @Builder
 public record RecipeInspectionSummaryRequest(
-        Long equipmentId,
+        long equipmentId,
         String maskId,
         String lotId,
         String stepId,

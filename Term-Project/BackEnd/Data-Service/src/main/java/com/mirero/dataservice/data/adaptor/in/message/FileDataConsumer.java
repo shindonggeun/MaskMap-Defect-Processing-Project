@@ -1,8 +1,10 @@
 package com.mirero.dataservice.data.adaptor.in.message;
 
 import com.mirero.dataservice.data.adaptor.in.web.equipment.dto.EquipmentInfo;
+import com.mirero.dataservice.data.adaptor.in.web.maskMap.dto.MaskMapInfo;
 import com.mirero.dataservice.data.adaptor.in.web.recipeInspectionSummary.dto.RecipeInspectionSummaryInfo;
 import com.mirero.dataservice.data.application.port.in.equipment.EquipmentCommandService;
+import com.mirero.dataservice.data.application.port.in.maskMap.MaskMapCommandService;
 import com.mirero.dataservice.data.application.port.in.recipeInspectionSummary.RecipeInspectionSummaryCommandService;
 import com.mirero.globalmodule.common.dto.FileData;
 import com.mirero.globalmodule.common.dto.LrfFileData;
@@ -20,6 +22,7 @@ public class FileDataConsumer {
     private static final String KAFKA_TOPIC = "pasing-data-topic";
     private final EquipmentCommandService equipmentCommandService;
     private final RecipeInspectionSummaryCommandService recipeInspectionSummaryCommandService;
+    private final MaskMapCommandService maskMapCommandService;
 
     @KafkaListener(topics = KAFKA_TOPIC)
     public void consumeFileData(FileData fileData) {
@@ -34,7 +37,9 @@ public class FileDataConsumer {
 
             log.info("LRF 관련 데이터 중 레시피 검사 요약 정보: {}", recipeInspectionSummaryInfo);
         } else if (fileData instanceof RffFileData rffFileData) {
-            log.info("RFF 관련 데이터 각 테이블에 뿌리기 작업");
+            MaskMapInfo maskMapInfo = maskMapCommandService.saveMaskMap(rffFileData, equipmentInfo.id());
+
+            log.info("RFF 관련 데이터 중 마스크맵 요약 정보: {}", maskMapInfo);
         }
 
     }
