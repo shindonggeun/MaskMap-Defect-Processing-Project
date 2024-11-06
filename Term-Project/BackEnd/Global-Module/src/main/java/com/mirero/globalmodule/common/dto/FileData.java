@@ -1,4 +1,4 @@
-package com.mirero.ftpservice.ftp.adaptor.in.web.dto;
+package com.mirero.globalmodule.common.dto;
 
 public interface FileData {
     String fileName();

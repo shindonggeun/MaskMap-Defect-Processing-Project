@@ -10,22 +10,22 @@ public record KafkaProperties(
     public record ConsumerProperties(
             String groupId,
             String autoOffsetReset,
-            Properties properties
+            ConsumerPropertiesInner properties
     ) {}
 
-    public record Properties(
-            Spring spring
+    public record ConsumerPropertiesInner(
+            TrustedPackageConfig spring
     ) {}
 
-    public record Spring(
-            Json json
+    public record TrustedPackageConfig(
+            JsonSettings json
     ) {}
 
-    public record Json(
-            Trusted trusted
+    public record JsonSettings(
+            PackageTrustSettings trusted
     ) {}
 
-    public record Trusted(
+    public record PackageTrustSettings(
             String packages
     ) {}
 }
