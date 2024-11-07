@@ -11,16 +11,51 @@ deploy_infra:
     - echo "인프라 관련 설정 도커 컨테이너 배포 중..."
     - cd $SERVICE_INFRA_PATH
 
+    # 1. 각 컨테이너 실행 확인하는 작업
     # PostgreSQL 컨테이너 실행 상태 확인
     - echo "PostgreSQL 컨테이너 실행 상태 확인 중..."
     - isPostgresRunning=$(docker ps --filter name=postgresql --filter status=running --format '{{.Names}}') || true
     - echo "PostgreSQL 실행 상태 = '${isPostgresRunning}'"
 
+    # Zookeeper 컨테이너 실행 상태 확인
+    - echo "Zookeeper 컨테이너 실행 상태 확인 중..."
+    - isZookeeperRunning=$(docker ps --filter name=zookeeper --filter status=running --format '{{.Names}}') || true
+    - echo "Zookeeper 실행 상태 = '${isZookeeperRunning}'"
+
+    # Kafka-1 컨테이너 실행 상태 확인
+    - echo "Kafka-1 컨테이너 실행 상태 확인 중..."
+    - isKafkaRunning_1=$(docker ps --filter name=kafka-1 --filter status=running --format '{{.Names}}') || true
+    - echo "Kafka-1 실행 상태 = '${isKafkaRunning_1}'"
+
+    # kafka-2 컨테이너 실행 상태 확인
+    - echo "kafka-2 컨테이너 실행 상태 확인 중..."
+    - isKafkaRunning_2=$(docker ps --filter name=kafka-2 --filter status=running --format '{{.Names}}') || true
+    - echo "kafka-2 실행 상태 = '${isKafkaRunning_2}'"
+
+    # kafka-3 컨테이너 실행 상태 확인
+    - echo "kafka-3 컨테이너 실행 상태 확인 중..."
+    - isKafkaRunning_3=$(docker ps --filter name=kafka-3 --filter status=running --format '{{.Names}}') || true
+    - echo "kafka-3 실행 상태 = '${isKafkaRunning_3}'"
+
+    # kafka-ui 컨테이너 실행 상태 확인
+    - echo "kafka-ui 컨테이너 실행 상태 확인 중..."
+    - isKafkaUiRunning=$(docker ps --filter name=kafka-ui --filter status=running --format '{{.Names}}') || true
+    - echo "kafka-ui 실행 상태 = '${isKafkaUiRunning}'"
+
     # PostgreSQL이 실행 중이지 않을 때만 Docker Compose로 실행
     - |
       if [ -z "${isPostgresRunning}" ]; then
-        echo "PostgreSQL 컨테이너가 실행 중이 아닙니다. Docker Compose로 PostgreSQL 실행하겠습니다.";
+        echo "PostgreSQL 컨테이너가 실행 중이 아닙니다. Docker Compose로 빌드한 뒤 PostgreSQL 실행하겠습니다.";
         docker-compose -f docker-compose.yml --env-file .env-infra up --build -d postgresql_service;
       else
         echo "PostgreSQL 컨테이너가 이미 실행 중입니다.";
+      fi
+
+    # Kafka 분산 클러스터들이 실행 중이지 않을 때만 Docker Compose로 실행
+    - |
+      if [ -z "${isZookeeperRunning}" ] || [ -z "${isKafkaRunning_1}" ] || [ -z "${isKafkaRunning_2}" ] || [ -z "${isKafkaRunning_3}" ] || [ -z "${isKafkaUiRunning}" ]; then
+        echo "Kafka 분산 클러스터들이 실행 중이 아닙니다. Docker Compose로 빌드한 뒤 Kafka 분산 클러스터를 구성해 실행하겠습니다.";
+        docker-compose -f docker-compose.yml --env-file .env-infra up --build -d zookeeper_service kafka-1_service kafka-2_service kafka-3_service kafka-ui_service;
+      else
+        echo "Kafka 분산 클러스터의 모든 컨테이너가 이미 실행중입니다.";
       fi

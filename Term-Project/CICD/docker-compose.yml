@@ -19,6 +19,7 @@ services:
   zookeeper_service:
     image: confluentinc/cp-zookeeper:latest
     container_name: zookeeper
+    restart: always
     ports:
       - "${ZOOKEEPER_CLIENT_PORT}:${ZOOKEEPER_CLIENT_PORT}"
     environment:
@@ -31,6 +32,7 @@ services:
   kafka-1_service:
     image: confluentinc/cp-kafka:latest
     container_name: kafka-1
+    restart: always
     depends_on:
       - zookeeper_service
     ports:
@@ -55,6 +57,7 @@ services:
   kafka-2_service:
     image: confluentinc/cp-kafka:latest
     container_name: kafka-2
+    restart: always
     depends_on:
       - zookeeper_service
     ports:
@@ -79,6 +82,7 @@ services:
   kafka-3_service:
     image: confluentinc/cp-kafka:latest
     container_name: kafka-3
+    restart: always
     depends_on:
       - zookeeper_service
     ports:
@@ -103,9 +107,9 @@ services:
   kafka-ui_service:
     image: provectuslabs/kafka-ui
     container_name: kafka-ui
+    restart: always
     ports:
       - "${KAFKA_UI_PORT}:8080"
-    restart: always
     environment:
       TZ: ${TZ}
       KAFKA_CLUSTERS_0_NAME: ${KAFKA_CLUSTER_NAME}
