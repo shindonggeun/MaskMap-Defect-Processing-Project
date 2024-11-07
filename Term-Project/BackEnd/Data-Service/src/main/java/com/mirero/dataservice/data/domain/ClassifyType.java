@@ -21,11 +21,11 @@ public class ClassifyType extends BaseEntity {
     private UUID id;
 
     @Comment("분류 이름")
-    @Column(nullable = false)
+    @Column(columnDefinition = "VARCHAR(20)", nullable = false)
     private String name;
 
     @Comment("분류 색상")
-    @Column(nullable = false)
+    @Column(columnDefinition = "VARCHAR(12)", nullable = false)
     private String color;
 
     @Comment("분류 번호")

@@ -11,7 +11,7 @@ public record LrfFileData(
         List<AreaInformation> areaInformationList,
         ResultBasicInformation resultBasicInformation,
         InspectionSummary inspectionSummary,
-        List<ClassifyTypeInformation> ClassifyTypeInformationList, // ClassifyTypeInformation 부분
+        List<ClassifyTypeInformation> classifyTypeInformationList, // ClassifyTypeInformation 부분
         List<Defect> defectList,
         int defectCount // defects.size()
 ) implements FileData {
