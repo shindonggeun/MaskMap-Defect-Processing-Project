@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Comment;
 
-import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -13,6 +12,9 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(indexes = {
+        @Index(name = "idx_classify_type_equipment_id_number", columnList = "equipment_id, number")
+})
 public class ClassifyType extends BaseEntity {
 
     @Id
@@ -35,7 +37,4 @@ public class ClassifyType extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "equipment_id")
     private Equipment equipment;
-
-    @OneToMany(mappedBy = "classifyType", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Defect> defectList;
 }
