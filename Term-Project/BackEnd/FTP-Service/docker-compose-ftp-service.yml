@@ -9,7 +9,6 @@ services:
     ports:
       - "${FTP_SERVER_PORT}:${FTP_SERVER_PORT}"
     environment:
-      - TZ=${TZ}
       - FTP_SERVER_PORT=${FTP_SERVER_PORT}
       - FTP_SPRING_APPLICATION_NAME=${FTP_SPRING_APPLICATION_NAME}
       - EUREKA_SERVER_URL=${EUREKA_SERVER_URL}
@@ -23,8 +22,19 @@ services:
       - FTP_PASSWORD=${FTP_PASSWORD}
       - FTP_REMOTE_DIRECTORY=${FTP_REMOTE_DIRECTORY}
       - FTP_LOCAL_DIRECTORY=${FTP_LOCAL_DIRECTORY}
+      - TZ=${TZ}
+      - JASYPT_ENCRYPTOR_KEY=${JASYPT_ENCRYPTOR_KEY}
+      - KAFKA_BOOTSTRAP_SERVERS_1=${KAFKA_BOOTSTRAP_SERVERS_1}
+      - KAFKA_BOOTSTRAP_SERVERS_2=${KAFKA_BOOTSTRAP_SERVERS_2}
+      - KAFKA_BOOTSTRAP_SERVERS_3=${KAFKA_BOOTSTRAP_SERVERS_3}
+    volumes:
+      - ftp_metadata:/metadata/store # 메타데이터 디렉토리 볼륨 마운트
     networks:
       - term-project-net
+
+volumes:
+  ftp_metadata:
+    driver: local
 
 networks:
   term-project-net:
