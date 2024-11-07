@@ -46,7 +46,11 @@ spring:
 eureka:
   client:
     serviceUrl:
-      defaultZone: ${EUREKA_SERVER_URL}  # Eureka 서버의 URL
+      defaultZone: ${EUREKA_SERVER_URL}  # .env 파일에서 Eureka 서버 URL 주입
+  instance:
+    prefer-ip-address: ${EUREKA_INSTANCE_PREFER_IP}  # 호스트명 사용 설정
+    leaseRenewalIntervalInSeconds: ${EUREKA_LEASE_RENEWAL_INTERVAL}  # 갱신 빈도
+    leaseExpirationDurationInSeconds: ${EUREKA_LEASE_EXPIRATION_DURATION}  # 만료 시간
 
 jasypt:
   encryptor:
