@@ -27,6 +27,7 @@ services:
       - KAFKA_BOOTSTRAP_SERVERS_1=${KAFKA_BOOTSTRAP_SERVERS_1}
       - KAFKA_BOOTSTRAP_SERVERS_2=${KAFKA_BOOTSTRAP_SERVERS_2}
       - KAFKA_BOOTSTRAP_SERVERS_3=${KAFKA_BOOTSTRAP_SERVERS_3}
+      - KAFKA_CONSUMER_GROUP_ID=${KAFKA_CONSUMER_GROUP_ID}
     volumes:
       - ftp_metadata:/metadata/store # 메타데이터 디렉토리 볼륨 마운트
     networks:
