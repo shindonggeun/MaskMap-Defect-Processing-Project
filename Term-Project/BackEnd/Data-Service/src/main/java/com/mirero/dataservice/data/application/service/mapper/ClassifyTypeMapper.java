@@ -15,7 +15,6 @@ import java.util.UUID;
 public interface ClassifyTypeMapper {
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "defectList", ignore = true)
     @Mapping(target = "equipment.id", source = "equipmentId")
     ClassifyType toEntity(ClassifyTypeRequest classifyTypeRequest);
 

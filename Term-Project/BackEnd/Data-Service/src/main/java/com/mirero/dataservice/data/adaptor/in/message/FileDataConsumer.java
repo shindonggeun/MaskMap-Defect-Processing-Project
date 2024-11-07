@@ -3,12 +3,14 @@ package com.mirero.dataservice.data.adaptor.in.message;
 import com.mirero.dataservice.data.adaptor.in.web.alignmentPoint.dto.AlignmentPointInfo;
 import com.mirero.dataservice.data.adaptor.in.web.area.dto.AreaInfo;
 import com.mirero.dataservice.data.adaptor.in.web.classifyType.dto.ClassifyTypeInfo;
+import com.mirero.dataservice.data.adaptor.in.web.defect.dto.DefectInfo;
 import com.mirero.dataservice.data.adaptor.in.web.equipment.dto.EquipmentInfo;
 import com.mirero.dataservice.data.adaptor.in.web.maskMap.dto.MaskMapInfo;
 import com.mirero.dataservice.data.adaptor.in.web.recipeInspectionSummary.dto.RecipeInspectionSummaryInfo;
 import com.mirero.dataservice.data.application.port.in.alignmentPoint.AlignmentPointCommandService;
 import com.mirero.dataservice.data.application.port.in.area.AreaCommandService;
 import com.mirero.dataservice.data.application.port.in.classifyType.ClassifyTypeCommandService;
+import com.mirero.dataservice.data.application.port.in.defect.DefectCommandService;
 import com.mirero.dataservice.data.application.port.in.equipment.EquipmentCommandService;
 import com.mirero.dataservice.data.application.port.in.maskMap.MaskMapCommandService;
 import com.mirero.dataservice.data.application.port.in.recipeInspectionSummary.RecipeInspectionSummaryCommandService;
@@ -37,6 +39,7 @@ public class FileDataConsumer {
     private final AreaCommandService areaCommandService;
     private final AlignmentPointCommandService alignmentPointCommandService;
     private final ClassifyTypeCommandService classifyTypeCommandService;
+    private final DefectCommandService defectCommandService;
 
     private final Map<UUID, LrfFileData> lrfFileDataCache = new ConcurrentHashMap<>();
     private final Map<UUID, RffFileData> rffFileDataCache = new ConcurrentHashMap<>();
@@ -46,7 +49,6 @@ public class FileDataConsumer {
         String fileName = fileData.fileName();
 
         EquipmentInfo equipmentInfo = equipmentCommandService.getOrCreateEquipment(fileName);
-        log.info("장비 정보: {}", equipmentInfo);
 
         UUID equipmentId = equipmentInfo.id();
 
@@ -57,7 +59,6 @@ public class FileDataConsumer {
                     recipeInspectionSummaryCommandService.saveRecipeInspectionSummary(lrfFileData, equipmentId);
 
             List<AreaInfo> areaInfoList = areaCommandService.saveAreaList(lrfFileData, equipmentId);
-            processIfBothDataAvailable(equipmentId);
         } else if (fileData instanceof RffFileData rffFileData) {
             rffFileDataCache.put(equipmentId, rffFileData); // RFF 데이터를 임시 저장
 
@@ -65,9 +66,9 @@ public class FileDataConsumer {
 
             List<AlignmentPointInfo> alignmentPointInfoList =
                     alignmentPointCommandService.saveAlignmentPointList(rffFileData, equipmentId);
-            processIfBothDataAvailable(equipmentId);
         }
 
+        processIfBothDataAvailable(equipmentId);
     }
 
     private void processIfBothDataAvailable(UUID equipmentId) {
@@ -79,7 +80,8 @@ public class FileDataConsumer {
             List<ClassifyTypeInfo> classifyTypeInfoList =
                     classifyTypeCommandService.saveClassifyTypeList(lrfFileData, rffFileData, equipmentId);
 
-            log.info("분류 정보 데이터: {}", classifyTypeInfoList);
+            List<DefectInfo> defectInfoList =
+                    defectCommandService.saveDefectList(lrfFileData, rffFileData, equipmentId);
 
             lrfFileDataCache.remove(equipmentId);
             rffFileDataCache.remove(equipmentId);

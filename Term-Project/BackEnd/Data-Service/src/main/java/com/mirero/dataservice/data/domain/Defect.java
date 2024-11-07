@@ -12,6 +12,9 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(indexes = {
+        @Index(name = "idx_defect_equipment_id_classify_number", columnList = "equipment_id, classify_number")
+})
 public class Defect extends BaseEntity {
 
     @Id
@@ -68,6 +71,6 @@ public class Defect extends BaseEntity {
     private Integer classifyNumber;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "classify_type_id")
-    private ClassifyType classifyType;
+    @JoinColumn(name = "equipment_id")
+    private Equipment equipment;
 }

@@ -47,7 +47,7 @@ public class FtpIntegrationFlowConfig {
     @Bean
     public IntegrationFlow ftpIntegrationFlow(FtpInboundFileSynchronizingMessageSource ftpMessageSource) {
         return IntegrationFlow.from(ftpMessageSource,
-                        config -> config.poller(Pollers.fixedDelay(Duration.ofMinutes(1)) // 1분마다 FTP 서버를 감지하여 새 파일을 가져옴
+                        config -> config.poller(Pollers.fixedDelay(Duration.ofMinutes(60)) // 60분마다 FTP 서버를 감지하여 새 파일을 가져옴
                                 .maxMessagesPerPoll(20) // 한 번의 폴링에서 최대 20개의 파일을 처리
                                 .taskExecutor(taskExecutor))) // 병렬 처리 활성화
                 .channel(ftpChannel) // 파일을 큐 채널로 전송

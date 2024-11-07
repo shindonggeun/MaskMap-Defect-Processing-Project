@@ -9,9 +9,11 @@ import com.mirero.dataservice.data.domain.Equipment;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class EquipmentCommandServiceImpl implements EquipmentCommandService {
 
@@ -25,10 +27,10 @@ public class EquipmentCommandServiceImpl implements EquipmentCommandService {
         return queryRepoPort.findByFileName(fileName)
                 .map(mapper::toEquipmentInfo)
                 .orElseGet(() -> {
-                    Equipment equipment = Equipment.builder()
+                    Equipment entity = Equipment.builder()
                             .fileName(fileName)
                             .build();
-                    Equipment savedEquipment = commandRepoPort.save(equipment);
+                    Equipment savedEquipment = commandRepoPort.save(entity);
                     return mapper.toEquipmentInfo(savedEquipment);
                 });
     }
