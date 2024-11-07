@@ -12,6 +12,10 @@ spring:
           uri: lb://FTP-SERVICE  # 요청을 로드밸런싱하여 FTP-SERVICE로 전달, 'lb://'는 Eureka를 통해 동적 로드 밸런싱
           predicates:
             - Path=/api/v1/ftp/**  # 경로 조건, 클라이언트가 /api/v1/ftp/로 시작하는 경로로 요청을 보낼 때 이 라우트를 사용
+        - id: DATA-SERVICE
+          uri: lb://DATA-SERVICE
+          predicates:
+            - Path=/api/v1/data/**
 
 eureka:
   client:

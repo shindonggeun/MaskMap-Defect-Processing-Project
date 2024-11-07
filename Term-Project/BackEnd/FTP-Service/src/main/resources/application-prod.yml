@@ -5,6 +5,31 @@ spring:
   application:
     name: ${FTP_SPRING_APPLICATION_NAME}  # .env 파일에서 서비스 이름을 주입받음
 
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+
+  jpa:
+    enabled: false  # JPA 비활성화 (Global-Module의 JpaAuditConfig 부분 참고)
+
+  # Kafka Setting
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS_1}, ${KAFKA_BOOTSTRAP_SERVERS_2}, ${KAFKA_BOOTSTRAP_SERVERS_3} # 도커에서 설정한 내부 서비스명으로 접근 (내부 네트워크 이용)
+    consumer:
+      group-id: ${KAFKA_CONSUMER_GROUP_ID}
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: "*"
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
 eureka:
   client:
     serviceUrl:
@@ -21,3 +46,7 @@ ftp:
   password: ${FTP_PASSWORD}
   remote-directory: ${FTP_REMOTE_DIRECTORY}
   local-directory: ${FTP_LOCAL_DIRECTORY}
+
+jasypt:
+  encryptor:
+    key: ${JASYPT_ENCRYPTOR_KEY}

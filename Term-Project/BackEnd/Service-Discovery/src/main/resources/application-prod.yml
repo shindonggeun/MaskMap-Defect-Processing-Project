@@ -1,5 +1,5 @@
 server:
-  port: 8761  # Eureka 서버의 기본 포트
+  port: ${SERVICE_DISCOVERY_SERVER_PORT}  # Eureka 서버의 기본 포트
 
 eureka:
   instance:

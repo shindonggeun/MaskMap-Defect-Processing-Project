@@ -54,18 +54,12 @@ public class FileDataConsumer {
 
         if (fileData instanceof LrfFileData lrfFileData) {
             lrfFileDataCache.put(equipmentId, lrfFileData); // LRF 데이터를 임시 저장
-
-            RecipeInspectionSummaryInfo recipeInspectionSummaryInfo =
-                    recipeInspectionSummaryCommandService.saveRecipeInspectionSummary(lrfFileData, equipmentId);
-
-            List<AreaInfo> areaInfoList = areaCommandService.saveAreaList(lrfFileData, equipmentId);
+            recipeInspectionSummaryCommandService.saveRecipeInspectionSummary(lrfFileData, equipmentId);
+            areaCommandService.saveAreaList(lrfFileData, equipmentId);
         } else if (fileData instanceof RffFileData rffFileData) {
             rffFileDataCache.put(equipmentId, rffFileData); // RFF 데이터를 임시 저장
-
-            MaskMapInfo maskMapInfo = maskMapCommandService.saveMaskMap(rffFileData, equipmentId);
-
-            List<AlignmentPointInfo> alignmentPointInfoList =
-                    alignmentPointCommandService.saveAlignmentPointList(rffFileData, equipmentId);
+            maskMapCommandService.saveMaskMap(rffFileData, equipmentId);
+            alignmentPointCommandService.saveAlignmentPointList(rffFileData, equipmentId);
         }
 
         processIfBothDataAvailable(equipmentId);
@@ -76,12 +70,8 @@ public class FileDataConsumer {
         RffFileData rffFileData = rffFileDataCache.get(equipmentId);
 
         if (lrfFileData != null && rffFileData != null) {
-            // Classify_Type 데이터를 완성하고 저장하는 로직 호출
-            List<ClassifyTypeInfo> classifyTypeInfoList =
-                    classifyTypeCommandService.saveClassifyTypeList(lrfFileData, rffFileData, equipmentId);
-
-            List<DefectInfo> defectInfoList =
-                    defectCommandService.saveDefectList(lrfFileData, rffFileData, equipmentId);
+            classifyTypeCommandService.saveClassifyTypeList(lrfFileData, rffFileData, equipmentId);
+            defectCommandService.saveDefectList(lrfFileData, rffFileData, equipmentId);
 
             lrfFileDataCache.remove(equipmentId);
             rffFileDataCache.remove(equipmentId);

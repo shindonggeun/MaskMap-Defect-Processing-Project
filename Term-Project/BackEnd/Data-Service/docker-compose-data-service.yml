@@ -1,0 +1,27 @@
+services:
+  data_service:
+    container_name: data-service
+    build:
+      context: .
+      dockerfile: data-service.Dockerfile
+    image: data-service-img
+    restart: always
+    ports:
+      - "${DATA_SERVER_PORT}:${DATA_SERVER_PORT}"
+    environment:
+      - DATA_SPRING_APPLICATION_NAME=${DATA_SPRING_APPLICATION_NAME}
+      - DB_URL=${DB_URL}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - TZ=${TZ}
+      - JASYPT_ENCRYPTOR_KEY=${JASYPT_ENCRYPTOR_KEY}
+      - KAFKA_BOOTSTRAP_SERVERS_1=${KAFKA_BOOTSTRAP_SERVERS_1}
+      - KAFKA_BOOTSTRAP_SERVERS_2=${KAFKA_BOOTSTRAP_SERVERS_2}
+      - KAFKA_BOOTSTRAP_SERVERS_3=${KAFKA_BOOTSTRAP_SERVERS_3}
+    networks:
+      - term-project-net
+
+networks:
+  term-project-net:
+    name: term-project-net
+    driver: bridge
