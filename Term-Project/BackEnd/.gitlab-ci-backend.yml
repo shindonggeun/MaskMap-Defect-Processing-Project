@@ -45,3 +45,4 @@ deploy_spring_server:
     - docker-compose -f API-Gateway/docker-compose-api-gateway.yml --env-file .env-backend up --build -d
     - docker-compose -f Service-Discovery/docker-compose-service-discovery.yml --env-file .env-backend up --build -d
     - docker-compose -f FTP-Service/docker-compose-ftp-service.yml --env-file .env-backend up --build -d
+    - docker-compose -f Data-Service/docker-compose-data-service.yml --env-file .env-backend up --build -d
