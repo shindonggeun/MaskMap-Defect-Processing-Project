@@ -1,12 +1,6 @@
 package com.mirero.dataservice.data.adaptor.in.message;
 
-import com.mirero.dataservice.data.adaptor.in.web.alignmentPoint.dto.AlignmentPointInfo;
-import com.mirero.dataservice.data.adaptor.in.web.area.dto.AreaInfo;
-import com.mirero.dataservice.data.adaptor.in.web.classifyType.dto.ClassifyTypeInfo;
-import com.mirero.dataservice.data.adaptor.in.web.defect.dto.DefectInfo;
 import com.mirero.dataservice.data.adaptor.in.web.equipment.dto.EquipmentInfo;
-import com.mirero.dataservice.data.adaptor.in.web.maskMap.dto.MaskMapInfo;
-import com.mirero.dataservice.data.adaptor.in.web.recipeInspectionSummary.dto.RecipeInspectionSummaryInfo;
 import com.mirero.dataservice.data.application.port.in.alignmentPoint.AlignmentPointCommandService;
 import com.mirero.dataservice.data.application.port.in.area.AreaCommandService;
 import com.mirero.dataservice.data.application.port.in.classifyType.ClassifyTypeCommandService;
@@ -22,7 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -47,7 +40,6 @@ public class FileDataConsumer {
     @KafkaListener(topics = KAFKA_TOPIC)
     public void consumeFileData(FileData fileData) {
         String fileName = fileData.fileName();
-
         EquipmentInfo equipmentInfo = equipmentCommandService.getOrCreateEquipment(fileName);
 
         UUID equipmentId = equipmentInfo.id();
