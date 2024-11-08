@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/data/areas")
 @RequiredArgsConstructor
+@RequestMapping("/api/v1/data/areas")
 public class AreaController {
 
     private final AreaQueryService areaQueryService;

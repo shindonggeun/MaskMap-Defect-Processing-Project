@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/data/recipeInspectionSummaries")
 @RequiredArgsConstructor
+@RequestMapping("/api/v1/data/recipeInspectionSummaries")
 public class RecipeInspectionSummaryController {
 
     private final RecipeInspectionSummaryQueryService recipeInspectionSummaryQueryService;
