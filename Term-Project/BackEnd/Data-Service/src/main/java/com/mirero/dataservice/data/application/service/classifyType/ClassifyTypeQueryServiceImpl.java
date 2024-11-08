@@ -22,6 +22,7 @@ public class ClassifyTypeQueryServiceImpl implements ClassifyTypeQueryService {
     private final ClassifyTypeMapper mapper;
 
     @Override
+    @Transactional(readOnly = true)
     public List<ClassifyTypeInfo> getClassifyTypeListByEquipmentId(UUID equipmentId) {
         return mapper.toClassifyTypeInfoList(queryRepoPort.findAllByEquipmentId(equipmentId));
     }

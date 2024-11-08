@@ -21,8 +21,8 @@ public class AreaQueryServiceImpl implements AreaQueryService {
     private final AreaQueryRepoPort queryRepoPort;
     private final AreaMapper mapper;
 
-    @Transactional(readOnly = true)
     @Override
+    @Transactional(readOnly = true)
     public List<AreaInfo> getAreaListByEquipmentId(UUID equipmentId) {
         return mapper.toAreaInfoList(queryRepoPort.findAllByEquipmentId(equipmentId));
     }

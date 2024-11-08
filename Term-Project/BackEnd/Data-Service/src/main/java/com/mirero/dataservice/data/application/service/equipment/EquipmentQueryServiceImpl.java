@@ -23,8 +23,8 @@ public class EquipmentQueryServiceImpl implements EquipmentQueryService {
     private final EquipmentQueryRepoPort queryRepoPort;
     private final EquipmentMapper mapper;
 
-    @Transactional(readOnly = true)
     @Override
+    @Transactional(readOnly = true)
     public List<EquipmentInfo> getEquipmentListByCreatedDateRange(LocalDate startDate, LocalDate endDate) {
         LocalDateTime startOfDay = startDate.atStartOfDay();
         LocalDateTime endOfDay = endDate.atTime(LocalTime.MAX);

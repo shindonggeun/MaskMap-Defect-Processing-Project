@@ -21,8 +21,8 @@ public class DefectQueryServiceImpl implements DefectQueryService {
     private final DefectQueryRepoPort queryRepoPort;
     private final DefectMapper mapper;
 
-    @Transactional(readOnly = true)
     @Override
+    @Transactional(readOnly = true)
     public List<DefectInfo> getDefectListByEquipmentId(UUID equipmentId) {
         return mapper.toDefectInfoList(queryRepoPort.findAllByEquipmentId(equipmentId));
     }
