@@ -5,6 +5,8 @@ import com.mirero.dataservice.data.domain.Equipment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -15,11 +17,6 @@ public class EquipmentQueryRepoAdaptor implements EquipmentQueryRepoPort {
     private final EquipmentQueryRepository equipmentQueryRepository;
 
     @Override
-    public boolean existsByFileName(String fileName) {
-        return equipmentQueryRepository.existsByFileName(fileName);
-    }
-
-    @Override
     public Optional<Equipment> findById(UUID id) {
         return equipmentQueryRepository.findById(id);
     }
@@ -27,5 +24,10 @@ public class EquipmentQueryRepoAdaptor implements EquipmentQueryRepoPort {
     @Override
     public Optional<Equipment> findByFileName(String fileName) {
         return equipmentQueryRepository.findByFileName(fileName);
+    }
+
+    @Override
+    public List<Equipment> findAllByCreatedAtBetween(LocalDateTime startOfDay, LocalDateTime endOfDay) {
+        return equipmentQueryRepository.findAllByCreatedAtBetween(startOfDay, endOfDay);
     }
 }

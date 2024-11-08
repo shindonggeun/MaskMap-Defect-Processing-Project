@@ -8,6 +8,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -17,9 +22,12 @@ public class EquipmentQueryServiceImpl implements EquipmentQueryService {
     private final EquipmentMapper mapper;
 
     @Override
-    public EquipmentInfo getEquipmentByFileName(String fileName) {
-        return queryRepoPort.findByFileName(fileName)
+    public List<EquipmentInfo> getEquipmentListByCreatedDateRange(LocalDate startDate, LocalDate endDate) {
+        LocalDateTime startOfDay = startDate.atStartOfDay();
+        LocalDateTime endOfDay = endDate.atTime(LocalTime.MAX);
+
+        return queryRepoPort.findAllByCreatedAtBetween(startOfDay, endOfDay).stream()
                 .map(mapper::toEquipmentInfo)
-                .orElseThrow(() -> new RuntimeException("Equipment not found"));
+                .toList();
     }
 }
