@@ -7,7 +7,6 @@ import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import java.util.Collections;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,7 +24,6 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
     }
 
     @Bean
-    @Override
     public MongoClient mongoClient() {
         MongoCredential credential = MongoCredential.createCredential(mongoProperties.userName(),
             mongoProperties.authDatabase(), mongoProperties.password().toCharArray());
