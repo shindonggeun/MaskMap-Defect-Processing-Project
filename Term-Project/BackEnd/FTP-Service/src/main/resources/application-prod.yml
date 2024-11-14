@@ -13,6 +13,10 @@ spring:
   jpa:
     enabled: false  # JPA 비활성화 (Global-Module의 JpaAuditConfig 부분 참고)
 
+  data:
+    mongodb:
+      enabled: false # MongoDB 비활성화 (Global-Module의 MongoConfig 부분 참고)
+
   # Kafka Setting
   kafka:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS_1}, ${KAFKA_BOOTSTRAP_SERVERS_2}, ${KAFKA_BOOTSTRAP_SERVERS_3} # 도커에서 설정한 내부 서비스명으로 접근 (내부 네트워크 이용)

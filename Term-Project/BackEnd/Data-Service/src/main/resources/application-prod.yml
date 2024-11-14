@@ -26,6 +26,15 @@ spring:
     username: ${DB_USERNAME}  # PostgreSQL 사용자 이름
     password: ${DB_PASSWORD}  # PostgreSQL 비밀번호
 
+  data:
+    mongodb:
+      host: ${MONGO_DB_HOST}
+      port: ${MONGO_DB_PORT}
+      database: ${MONGO_DB_DATABASE}
+      username: ${MONGO_DB_USERNAME}
+      password: ${MONGO_DB_PASSWORD}
+      authentication-database: ${MONGO_DB_AUTHENTICATION_DATABASE}
+
   # Kafka Setting
   kafka:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS_1}, ${KAFKA_BOOTSTRAP_SERVERS_2}, ${KAFKA_BOOTSTRAP_SERVERS_3} # 도커에서 설정한 내부 서비스명으로 접근 (내부 네트워크 이용)

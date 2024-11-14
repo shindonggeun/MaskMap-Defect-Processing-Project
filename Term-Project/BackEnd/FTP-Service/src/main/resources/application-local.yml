@@ -13,6 +13,10 @@ spring:
   jpa:
     enabled: false  # JPA 비활성화 (Global-Module의 JpaAuditConfig 부분 참고)
 
+  data:
+    mongodb:
+      enabled: false # MongoDB 비활성화
+
   # Kafka Setting
   kafka:
     bootstrap-servers: localhost:9092, localhost:9093, localhost:9094
