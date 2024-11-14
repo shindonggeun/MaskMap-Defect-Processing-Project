@@ -7,10 +7,10 @@ public record MongoProperties(
     boolean enabled,
     String host,
     int port,
-    String databaseName,
-    String userName,
+    String database,
+    String username,
     String password,
-    String authDatabase
+    String authenticationDatabase
 ) {
 }
 

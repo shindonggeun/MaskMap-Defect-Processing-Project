@@ -24,15 +24,19 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
     @NonNull
     @Override
     protected String getDatabaseName() {
-        return mongoProperties.databaseName();
+        return mongoProperties.database();
     }
 
     @Bean
     @NonNull
     @Override
     public MongoClient mongoClient() {
-        MongoCredential credential = MongoCredential.createCredential(mongoProperties.userName(),
-            mongoProperties.authDatabase(), mongoProperties.password().toCharArray());
+        MongoCredential credential = MongoCredential.createCredential(
+            mongoProperties.username(),
+            mongoProperties.authenticationDatabase(),
+            mongoProperties.password().toCharArray()
+        );
+
         ServerAddress serverAddress = new ServerAddress(mongoProperties.host(), mongoProperties.port());
         return MongoClients.create(
             MongoClientSettings.builder()
