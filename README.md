@@ -102,8 +102,6 @@ Mask Map & Defect List 데이터를 관리하고 분석하여 결함을 효과�
     - spring-boot-starter-actuator: 애플리케이션 상태 모니터링
     - jjwt: JWT 인증
 
-## 기능 명세
-
 ## Sequence Diagram
 
 ![Sequence Diagram](docs/images/sequenceDiagram.png)
