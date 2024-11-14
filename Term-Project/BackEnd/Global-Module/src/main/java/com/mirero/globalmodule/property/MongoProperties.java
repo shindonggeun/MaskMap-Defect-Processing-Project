@@ -4,6 +4,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix = "spring.data.mongodb")
 public record MongoProperties(
+    boolean enabled,
     String host,
     int port,
     String databaseName,
@@ -12,3 +13,5 @@ public record MongoProperties(
     String authDatabase
 ) {
 }
+
+
