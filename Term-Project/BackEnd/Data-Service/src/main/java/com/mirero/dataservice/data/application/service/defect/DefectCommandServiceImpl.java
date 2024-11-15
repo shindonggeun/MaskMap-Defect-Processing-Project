@@ -5,7 +5,7 @@ import com.mirero.dataservice.data.adaptor.in.web.defect.dto.DefectRequest;
 import com.mirero.dataservice.data.application.port.in.defect.DefectCommandService;
 import com.mirero.dataservice.data.application.port.out.persistence.defect.DefectCommandRepoPort;
 import com.mirero.dataservice.data.application.service.mapper.DefectMapper;
-import com.mirero.dataservice.data.domain.Defect;
+import com.mirero.dataservice.data.domain.entity.Defect;
 import com.mirero.globalmodule.common.dto.LrfFileData;
 import com.mirero.globalmodule.common.dto.RffFileData;
 import lombok.RequiredArgsConstructor;

@@ -2,7 +2,7 @@ package com.mirero.dataservice.data.application.service.mapper;
 
 import com.mirero.dataservice.data.adaptor.in.web.alignmentPoint.dto.AlignmentPointInfo;
 import com.mirero.dataservice.data.adaptor.in.web.alignmentPoint.dto.AlignmentPointRequest;
-import com.mirero.dataservice.data.domain.AlignmentPoint;
+import com.mirero.dataservice.data.domain.entity.AlignmentPoint;
 import com.mirero.globalmodule.common.dto.RffFileData;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

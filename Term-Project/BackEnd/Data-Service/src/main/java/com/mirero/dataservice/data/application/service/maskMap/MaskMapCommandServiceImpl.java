@@ -5,7 +5,7 @@ import com.mirero.dataservice.data.adaptor.in.web.maskMap.dto.MaskMapRequest;
 import com.mirero.dataservice.data.application.port.in.maskMap.MaskMapCommandService;
 import com.mirero.dataservice.data.application.port.out.persistence.maskMap.MaskMapCommandRepoPort;
 import com.mirero.dataservice.data.application.service.mapper.MaskMapMapper;
-import com.mirero.dataservice.data.domain.MaskMap;
+import com.mirero.dataservice.data.domain.entity.MaskMap;
 import com.mirero.globalmodule.common.dto.RffFileData;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

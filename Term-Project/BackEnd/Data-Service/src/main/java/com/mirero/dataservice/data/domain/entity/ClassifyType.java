@@ -1,4 +1,4 @@
-package com.mirero.dataservice.data.domain;
+package com.mirero.dataservice.data.domain.entity;
 
 import com.mirero.globalmodule.common.entity.BaseEntity;
 import jakarta.persistence.*;

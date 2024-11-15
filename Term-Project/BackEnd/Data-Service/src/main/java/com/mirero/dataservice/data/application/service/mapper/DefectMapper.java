@@ -2,7 +2,7 @@ package com.mirero.dataservice.data.application.service.mapper;
 
 import com.mirero.dataservice.data.adaptor.in.web.defect.dto.DefectInfo;
 import com.mirero.dataservice.data.adaptor.in.web.defect.dto.DefectRequest;
-import com.mirero.dataservice.data.domain.Defect;
+import com.mirero.dataservice.data.domain.entity.Defect;
 import com.mirero.globalmodule.common.dto.LrfFileData;
 import com.mirero.globalmodule.common.dto.RffFileData;
 import org.mapstruct.Mapper;

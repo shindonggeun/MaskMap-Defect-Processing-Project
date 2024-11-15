@@ -2,7 +2,7 @@ package com.mirero.dataservice.data.application.service.mapper;
 
 import com.mirero.dataservice.data.adaptor.in.web.recipeInspectionSummary.dto.RecipeInspectionSummaryInfo;
 import com.mirero.dataservice.data.adaptor.in.web.recipeInspectionSummary.dto.RecipeInspectionSummaryRequest;
-import com.mirero.dataservice.data.domain.RecipeInspectionSummary;
+import com.mirero.dataservice.data.domain.entity.RecipeInspectionSummary;
 import com.mirero.globalmodule.common.dto.LrfFileData;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

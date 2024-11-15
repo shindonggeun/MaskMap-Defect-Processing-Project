@@ -1,7 +1,7 @@
 package com.mirero.dataservice.data.adaptor.out.persistence.maskMap;
 
 import com.mirero.dataservice.data.application.port.out.persistence.maskMap.MaskMapCommandRepoPort;
-import com.mirero.dataservice.data.domain.MaskMap;
+import com.mirero.dataservice.data.domain.entity.MaskMap;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

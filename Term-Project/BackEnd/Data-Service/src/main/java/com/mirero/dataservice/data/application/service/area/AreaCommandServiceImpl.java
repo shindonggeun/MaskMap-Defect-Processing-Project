@@ -5,7 +5,7 @@ import com.mirero.dataservice.data.adaptor.in.web.area.dto.AreaRequest;
 import com.mirero.dataservice.data.application.port.in.area.AreaCommandService;
 import com.mirero.dataservice.data.application.port.out.persistence.area.AreaCommandRepoPort;
 import com.mirero.dataservice.data.application.service.mapper.AreaMapper;
-import com.mirero.dataservice.data.domain.Area;
+import com.mirero.dataservice.data.domain.entity.Area;
 import com.mirero.globalmodule.common.dto.LrfFileData;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

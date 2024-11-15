@@ -5,7 +5,7 @@ import com.mirero.dataservice.data.application.port.in.equipment.EquipmentComman
 import com.mirero.dataservice.data.application.port.out.persistence.equipment.EquipmentCommandRepoPort;
 import com.mirero.dataservice.data.application.port.out.persistence.equipment.EquipmentQueryRepoPort;
 import com.mirero.dataservice.data.application.service.mapper.EquipmentMapper;
-import com.mirero.dataservice.data.domain.Equipment;
+import com.mirero.dataservice.data.domain.entity.Equipment;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

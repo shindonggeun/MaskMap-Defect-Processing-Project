@@ -2,7 +2,7 @@ package com.mirero.dataservice.data.application.service.mapper;
 
 import com.mirero.dataservice.data.adaptor.in.web.classifyType.dto.ClassifyTypeInfo;
 import com.mirero.dataservice.data.adaptor.in.web.classifyType.dto.ClassifyTypeRequest;
-import com.mirero.dataservice.data.domain.ClassifyType;
+import com.mirero.dataservice.data.domain.entity.ClassifyType;
 import com.mirero.globalmodule.common.dto.LrfFileData;
 import com.mirero.globalmodule.common.dto.RffFileData;
 import org.mapstruct.Mapper;

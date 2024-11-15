@@ -2,7 +2,7 @@ package com.mirero.dataservice.data.application.service.mapper;
 
 import com.mirero.dataservice.data.adaptor.in.web.area.dto.AreaInfo;
 import com.mirero.dataservice.data.adaptor.in.web.area.dto.AreaRequest;
-import com.mirero.dataservice.data.domain.Area;
+import com.mirero.dataservice.data.domain.entity.Area;
 import com.mirero.globalmodule.common.dto.LrfFileData;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

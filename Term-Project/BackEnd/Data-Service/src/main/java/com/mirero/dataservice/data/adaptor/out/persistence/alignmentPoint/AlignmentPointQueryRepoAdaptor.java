@@ -1,7 +1,7 @@
 package com.mirero.dataservice.data.adaptor.out.persistence.alignmentPoint;
 
 import com.mirero.dataservice.data.application.port.out.persistence.alignmentPoint.AlignmentPointQueryRepoPort;
-import com.mirero.dataservice.data.domain.AlignmentPoint;
+import com.mirero.dataservice.data.domain.entity.AlignmentPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

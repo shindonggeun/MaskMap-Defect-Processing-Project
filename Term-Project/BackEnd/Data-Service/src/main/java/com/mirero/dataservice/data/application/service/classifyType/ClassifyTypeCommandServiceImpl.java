@@ -5,7 +5,7 @@ import com.mirero.dataservice.data.adaptor.in.web.classifyType.dto.ClassifyTypeR
 import com.mirero.dataservice.data.application.port.in.classifyType.ClassifyTypeCommandService;
 import com.mirero.dataservice.data.application.port.out.persistence.classifyType.ClassifyTypeCommandRepoPort;
 import com.mirero.dataservice.data.application.service.mapper.ClassifyTypeMapper;
-import com.mirero.dataservice.data.domain.ClassifyType;
+import com.mirero.dataservice.data.domain.entity.ClassifyType;
 import com.mirero.globalmodule.common.dto.LrfFileData;
 import com.mirero.globalmodule.common.dto.RffFileData;
 import lombok.RequiredArgsConstructor;

@@ -5,7 +5,7 @@ import com.mirero.dataservice.data.adaptor.in.web.recipeInspectionSummary.dto.Re
 import com.mirero.dataservice.data.application.port.in.recipeInspectionSummary.RecipeInspectionSummaryCommandService;
 import com.mirero.dataservice.data.application.port.out.persistence.recipeInspectionSummary.RecipeInspectionSummaryCommandRepoPort;
 import com.mirero.dataservice.data.application.service.mapper.RecipeInspectionSummaryMapper;
-import com.mirero.dataservice.data.domain.RecipeInspectionSummary;
+import com.mirero.dataservice.data.domain.entity.RecipeInspectionSummary;
 import com.mirero.globalmodule.common.dto.LrfFileData;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

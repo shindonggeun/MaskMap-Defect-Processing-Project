@@ -2,7 +2,7 @@ package com.mirero.dataservice.data.application.service.mapper;
 
 import com.mirero.dataservice.data.adaptor.in.web.maskMap.dto.MaskMapInfo;
 import com.mirero.dataservice.data.adaptor.in.web.maskMap.dto.MaskMapRequest;
-import com.mirero.dataservice.data.domain.MaskMap;
+import com.mirero.dataservice.data.domain.entity.MaskMap;
 import com.mirero.globalmodule.common.dto.RffFileData;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
