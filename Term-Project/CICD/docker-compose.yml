@@ -134,6 +134,45 @@ services:
     networks:
       - term-project-net
 
+  # Kafka Connect with Debezium
+  kafka-connect_service:
+    image: debezium/connect:2.7.3.Final
+    container_name: kafka-connect
+    restart: always
+    depends_on:
+      - kafka-1_service
+      - zookeeper_service
+    ports:
+      - "8085:${KAFKA_CONNECT_PORT}"  # Kafka Connect REST API
+    environment:
+      BOOTSTRAP_SERVERS: kafka-1:29092,kafka-2:29093,kafka-3:29094
+      GROUP_ID: ${KAFKA_CONNECT_GROUP_ID}
+      CONFIG_STORAGE_TOPIC: ${KAFKA_CONNECT_CONFIG_STORAGE_TOPIC}
+      OFFSET_STORAGE_TOPIC: ${KAFKA_CONNECT_OFFSET_STORAGE_TOPIC}
+      STATUS_STORAGE_TOPIC: ${KAFKA_CONNECT_STATUS_STORAGE_TOPIC}
+      KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      VALUE_CONVERTER_SCHEMAS_ENABLE: false
+      KEY_CONVERTER_SCHEMAS_ENABLE: false
+      CONNECT_PLUGIN_PATH: ${KAFKA_CONNECT_PLUGIN_PATH}
+      CONNECT_REST_ADVERTISED_HOST_NAME: kafka-connect
+    networks:
+      - term-project-net
+
+  # Debezium
+  debezium-ui_service:
+    image: debezium/debezium-ui:latest
+    container_name: debezium-ui
+    restart: always
+    depends_on:
+      - kafka-connect_service
+    ports:
+      - "8086:${DEBEZIUM_UI_PORT}"  # Debezium UI
+    environment:
+      DEBEZIUM_UI_BACKEND_URL: ${DEBEZIUM_UI_BACKEND_URL}  # 내부 Kafka Connect URL
+    networks:
+      - term-project-net
+
 volumes:
   postgres_data:
   mongodb_data:

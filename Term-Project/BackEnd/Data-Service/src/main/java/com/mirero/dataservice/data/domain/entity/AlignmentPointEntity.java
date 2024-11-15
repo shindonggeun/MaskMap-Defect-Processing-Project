@@ -12,29 +12,26 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(indexes = {
-        @Index(name = "idx_classify_type_equipment_id_number", columnList = "equipment_id, number")
-})
-public class ClassifyType extends BaseEntity {
+public class AlignmentPoint extends BaseEntity {
 
     @Id
-    @Comment("분류 정보 아이디")
+    @Comment("정렬 포인트 아이디")
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Comment("분류 이름")
-    @Column(columnDefinition = "VARCHAR(20)", nullable = false)
-    private String name;
-
-    @Comment("분류 색상")
-    @Column(columnDefinition = "VARCHAR(12)", nullable = false)
-    private String color;
-
-    @Comment("분류 번호")
+    @Comment("순서 번호")
     @Column(nullable = false)
-    private Integer number;
+    private Integer idx;
+
+    @Comment("X 좌표")
+    @Column(nullable = false)
+    private Double x;
+
+    @Comment("Y 좌표")
+    @Column(nullable = false)
+    private Double y;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "equipment_id")
-    private Equipment equipment;
+    private EquipmentEntity equipmentEntity;
 }

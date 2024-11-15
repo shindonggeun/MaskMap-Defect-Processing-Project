@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 @Getter
 @Builder
-@Document
+@Document(collation = "mask_map")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class MaskMap {

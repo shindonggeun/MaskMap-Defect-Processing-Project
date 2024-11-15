@@ -72,5 +72,5 @@ public class Defect extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "equipment_id")
-    private Equipment equipment;
+    private EquipmentEntity equipmentEntity;
 }
