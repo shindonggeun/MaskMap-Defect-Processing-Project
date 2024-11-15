@@ -1,7 +1,7 @@
 package com.mirero.dataservice.data.adaptor.out.persistence.alignmentPoint;
 
 import com.mirero.dataservice.data.application.port.out.persistence.alignmentPoint.AlignmentPointQueryRepoPort;
-import com.mirero.dataservice.data.domain.entity.AlignmentPoint;
+import com.mirero.dataservice.data.domain.entity.AlignmentPointEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +15,7 @@ public class AlignmentPointQueryRepoAdaptor implements AlignmentPointQueryRepoPo
     private final AlignmentPointQueryRepository alignmentPointQueryRepository;
 
     @Override
-    public List<AlignmentPoint> findAllByEquipmentId(UUID equipmentId) {
+    public List<AlignmentPointEntity> findAllByEquipmentId(UUID equipmentId) {
         return alignmentPointQueryRepository.findAllByEquipmentId(equipmentId);
     }
 }

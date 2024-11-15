@@ -1,8 +1,8 @@
 package com.mirero.dataservice.data.application.port.out.persistence.maskMap;
 
-import com.mirero.dataservice.data.domain.entity.MaskMap;
+import com.mirero.dataservice.data.domain.entity.MaskMapEntity;
 
 public interface MaskMapCommandRepoPort {
 
-    MaskMap save(MaskMap maskMap);
+    MaskMapEntity save(MaskMapEntity maskMapEntity);
 }

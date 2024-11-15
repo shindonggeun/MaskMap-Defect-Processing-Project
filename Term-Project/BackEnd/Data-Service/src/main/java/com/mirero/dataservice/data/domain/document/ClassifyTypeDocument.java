@@ -12,10 +12,10 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 @Getter
 @Builder
-@Document
+@Document(collection = "classify_type")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public class ClassifyType {
+public class ClassifyTypeDocument {
 
     @Id
     private UUID id;

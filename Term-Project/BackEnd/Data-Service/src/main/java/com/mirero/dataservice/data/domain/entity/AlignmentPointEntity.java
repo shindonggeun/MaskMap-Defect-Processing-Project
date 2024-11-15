@@ -10,9 +10,10 @@ import java.util.UUID;
 @Entity
 @Getter
 @Builder
+@Table(name = "alignment_point")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public class AlignmentPoint extends BaseEntity {
+public class AlignmentPointEntity extends BaseEntity {
 
     @Id
     @Comment("정렬 포인트 아이디")
@@ -33,5 +34,5 @@ public class AlignmentPoint extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "equipment_id")
-    private EquipmentEntity equipmentEntity;
+    private EquipmentEntity equipment;
 }

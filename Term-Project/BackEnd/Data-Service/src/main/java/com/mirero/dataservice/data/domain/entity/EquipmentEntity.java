@@ -13,10 +13,11 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(indexes = {
+@Table(name = "equipment",
+    indexes = {
         @Index(name = "idx_file_name", columnList = "file_name")
 })
-public class Equipment extends BaseEntity {
+public class EquipmentEntity extends BaseEntity {
 
     @Id
     @Comment("장비 정보 아이디")
@@ -28,14 +29,14 @@ public class Equipment extends BaseEntity {
     private String fileName;
 
     @OneToMany(mappedBy = "equipment", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ClassifyType> classifyTypeList;
+    private List<ClassifyTypeEntity> classifyTypeEntityList;
 
     @OneToMany(mappedBy = "equipment", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Area> areaList;
+    private List<AreaEntity> areaEntityList;
 
     @OneToMany(mappedBy = "equipment", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<AlignmentPoint> alignmentPointList;
+    private List<AlignmentPointEntity> alignmentPointEntityList;
 
     @OneToMany(mappedBy = "equipment", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Defect> defectList;
+    private List<DefectEntity> defectList;
 }

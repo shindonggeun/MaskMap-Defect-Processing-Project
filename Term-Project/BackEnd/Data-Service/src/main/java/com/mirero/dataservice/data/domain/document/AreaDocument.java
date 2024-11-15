@@ -12,10 +12,10 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 @Getter
 @Builder
-@Document
+@Document(collection = "area")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public class Area {
+public class AreaDocument {
 
     @Id
     private UUID id;

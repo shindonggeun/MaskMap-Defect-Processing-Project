@@ -1,7 +1,7 @@
 package com.mirero.dataservice.data.adaptor.out.persistence.maskMap;
 
 import com.mirero.dataservice.data.application.port.out.persistence.maskMap.MaskMapCommandRepoPort;
-import com.mirero.dataservice.data.domain.entity.MaskMap;
+import com.mirero.dataservice.data.domain.entity.MaskMapEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +12,7 @@ public class MaskMapCommandRepoAdaptor implements MaskMapCommandRepoPort {
     private final MaskMapCommandRepository maskMapCommandRepository;
 
     @Override
-    public MaskMap save(MaskMap maskMap) {
-        return maskMapCommandRepository.save(maskMap);
+    public MaskMapEntity save(MaskMapEntity maskMapEntity) {
+        return maskMapCommandRepository.save(maskMapEntity);
     }
 }

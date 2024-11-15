@@ -2,7 +2,7 @@ package com.mirero.dataservice.data.application.service.mapper;
 
 import com.mirero.dataservice.data.adaptor.in.web.defect.dto.DefectInfo;
 import com.mirero.dataservice.data.adaptor.in.web.defect.dto.DefectRequest;
-import com.mirero.dataservice.data.domain.entity.Defect;
+import com.mirero.dataservice.data.domain.entity.DefectEntity;
 import com.mirero.globalmodule.common.dto.LrfFileData;
 import com.mirero.globalmodule.common.dto.RffFileData;
 import org.mapstruct.Mapper;
@@ -17,13 +17,13 @@ public interface DefectMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "equipment.id", source = "equipmentId")
-    Defect toEntity(DefectRequest defectRequest);
+    DefectEntity toEntity(DefectRequest defectRequest);
 
-    DefectInfo toDefectInfo(Defect defect);
+    DefectInfo toDefectInfo(DefectEntity defectEntity);
 
-    List<DefectInfo> toDefectInfoList(List<Defect> defectList);
+    List<DefectInfo> toDefectInfoList(List<DefectEntity> defectEntityList);
 
-    default List<Defect> toEntityList(List<DefectRequest> defectRequestList) {
+    default List<DefectEntity> toEntityList(List<DefectRequest> defectRequestList) {
         return defectRequestList.stream()
                 .map(this::toEntity)
                 .toList();

@@ -12,10 +12,10 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 @Getter
 @Builder
-@Document
+@Document(collation = "defect")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public class Defect {
+public class DefectDocument {
 
     @Id
     private UUID id;

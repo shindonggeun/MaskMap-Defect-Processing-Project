@@ -12,10 +12,10 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 @Getter
 @Builder
-@Document
+@Document(collection = "alignment_point")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public class AlignmentPoint {
+public class AlignmentPointDocument {
 
     @Id
     private UUID id;

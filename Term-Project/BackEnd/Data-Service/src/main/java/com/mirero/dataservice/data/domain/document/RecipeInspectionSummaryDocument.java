@@ -13,10 +13,10 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 @Getter
 @Builder
-@Document
+@Document(collection = "recipe_inspection_summary")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public class RecipeInspectionSummary {
+public class RecipeInspectionSummaryDocument {
 
     @Id
     private UUID id;

@@ -5,7 +5,7 @@ import com.mirero.dataservice.data.adaptor.in.web.defect.dto.DefectRequest;
 import com.mirero.dataservice.data.application.port.in.defect.DefectCommandService;
 import com.mirero.dataservice.data.application.port.out.persistence.defect.DefectCommandRepoPort;
 import com.mirero.dataservice.data.application.service.mapper.DefectMapper;
-import com.mirero.dataservice.data.domain.entity.Defect;
+import com.mirero.dataservice.data.domain.entity.DefectEntity;
 import com.mirero.globalmodule.common.dto.LrfFileData;
 import com.mirero.globalmodule.common.dto.RffFileData;
 import lombok.RequiredArgsConstructor;
@@ -28,8 +28,8 @@ public class DefectCommandServiceImpl implements DefectCommandService {
     @Override
     public List<DefectInfo> saveDefectList(LrfFileData lrfFileData, RffFileData rffFileData, UUID equipmentId) {
         List<DefectRequest> requestList = mapper.toDefectRequestList(lrfFileData, rffFileData, equipmentId);
-        List<Defect> entityList = mapper.toEntityList(requestList);
-        List<Defect> savedEntityList = commandRepoPort.saveAll(entityList);
+        List<DefectEntity> entityList = mapper.toEntityList(requestList);
+        List<DefectEntity> savedEntityList = commandRepoPort.saveAll(entityList);
 
         return mapper.toDefectInfoList(savedEntityList);
     }

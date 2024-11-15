@@ -5,7 +5,7 @@ import com.mirero.dataservice.data.adaptor.in.web.maskMap.dto.MaskMapRequest;
 import com.mirero.dataservice.data.application.port.in.maskMap.MaskMapCommandService;
 import com.mirero.dataservice.data.application.port.out.persistence.maskMap.MaskMapCommandRepoPort;
 import com.mirero.dataservice.data.application.service.mapper.MaskMapMapper;
-import com.mirero.dataservice.data.domain.entity.MaskMap;
+import com.mirero.dataservice.data.domain.entity.MaskMapEntity;
 import com.mirero.globalmodule.common.dto.RffFileData;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,8 +26,8 @@ public class MaskMapCommandServiceImpl implements MaskMapCommandService {
     @Override
     public MaskMapInfo saveMaskMap(RffFileData rffFileData, UUID equipmentId) {
         MaskMapRequest request = mapper.toMaskMapRequest(rffFileData, equipmentId);
-        MaskMap entity = mapper.toEntity(request);
-        MaskMap savedEntity = commandRepoPort.save(entity);
+        MaskMapEntity entity = mapper.toEntity(request);
+        MaskMapEntity savedEntity = commandRepoPort.save(entity);
 
         return mapper.toMaskMapInfo(savedEntity);
     }

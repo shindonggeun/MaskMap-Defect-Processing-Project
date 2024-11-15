@@ -1,7 +1,7 @@
 package com.mirero.dataservice.data.adaptor.out.persistence.recipeInspectionSummary;
 
 import com.mirero.dataservice.data.application.port.out.persistence.recipeInspectionSummary.RecipeInspectionSummaryQueryRepoPort;
-import com.mirero.dataservice.data.domain.entity.RecipeInspectionSummary;
+import com.mirero.dataservice.data.domain.entity.RecipeInspectionSummaryEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +14,7 @@ public class RecipeInspectionSummaryQueryRepoAdaptor implements RecipeInspection
     private final RecipeInspectionSummaryQueryRepository recipeInspectionSummaryQueryRepository;
 
     @Override
-    public RecipeInspectionSummary findByEquipmentId(UUID equipmentId) {
+    public RecipeInspectionSummaryEntity findByEquipmentId(UUID equipmentId) {
         return recipeInspectionSummaryQueryRepository.findByEquipmentId(equipmentId);
     }
 }

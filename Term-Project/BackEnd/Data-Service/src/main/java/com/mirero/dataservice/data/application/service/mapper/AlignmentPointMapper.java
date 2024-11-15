@@ -2,7 +2,7 @@ package com.mirero.dataservice.data.application.service.mapper;
 
 import com.mirero.dataservice.data.adaptor.in.web.alignmentPoint.dto.AlignmentPointInfo;
 import com.mirero.dataservice.data.adaptor.in.web.alignmentPoint.dto.AlignmentPointRequest;
-import com.mirero.dataservice.data.domain.entity.AlignmentPoint;
+import com.mirero.dataservice.data.domain.entity.AlignmentPointEntity;
 import com.mirero.globalmodule.common.dto.RffFileData;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -16,13 +16,13 @@ public interface AlignmentPointMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "equipment.id", source = "equipmentId")
-    AlignmentPoint toEntity(AlignmentPointRequest alignmentPointRequest);
+    AlignmentPointEntity toEntity(AlignmentPointRequest alignmentPointRequest);
 
-    AlignmentPointInfo toAlignmentPointInfo(AlignmentPoint alignmentPoint);
+    AlignmentPointInfo toAlignmentPointInfo(AlignmentPointEntity alignmentPointEntity);
 
-    List<AlignmentPointInfo> toAlignmentPointInfoList(List<AlignmentPoint> alignmentPointList);
+    List<AlignmentPointInfo> toAlignmentPointInfoList(List<AlignmentPointEntity> alignmentPointEntityList);
 
-    default List<AlignmentPoint> toEntityList(List<AlignmentPointRequest> alignmentPointRequestList) {
+    default List<AlignmentPointEntity> toEntityList(List<AlignmentPointRequest> alignmentPointRequestList) {
         return alignmentPointRequestList.stream()
                 .map(this::toEntity)
                 .collect(Collectors.toList());

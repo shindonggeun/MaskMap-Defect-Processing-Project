@@ -10,9 +10,10 @@ import java.util.UUID;
 @Entity
 @Getter
 @Builder
+@Table(name = "mask_map")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public class MaskMap extends BaseEntity {
+public class MaskMapEntity extends BaseEntity {
 
     @Id
     @Comment("마스크 맵 정보 아이디")
@@ -53,5 +54,5 @@ public class MaskMap extends BaseEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "equipment_id", nullable = false)
-    private Equipment equipment;
+    private EquipmentEntity equipment;
 }

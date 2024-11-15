@@ -10,9 +10,10 @@ import java.util.UUID;
 @Entity
 @Getter
 @Builder
+@Table(name = "area")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public class Area extends BaseEntity {
+public class AreaEntity extends BaseEntity {
 
     @Id
     @Comment("영역 정보 아이디")
@@ -45,5 +46,5 @@ public class Area extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "equipment_id")
-    private EquipmentEntity equipmentEntity;
+    private EquipmentEntity equipment;
 }

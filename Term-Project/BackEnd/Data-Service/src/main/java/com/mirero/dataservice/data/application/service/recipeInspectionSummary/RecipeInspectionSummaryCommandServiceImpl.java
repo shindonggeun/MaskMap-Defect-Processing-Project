@@ -5,7 +5,7 @@ import com.mirero.dataservice.data.adaptor.in.web.recipeInspectionSummary.dto.Re
 import com.mirero.dataservice.data.application.port.in.recipeInspectionSummary.RecipeInspectionSummaryCommandService;
 import com.mirero.dataservice.data.application.port.out.persistence.recipeInspectionSummary.RecipeInspectionSummaryCommandRepoPort;
 import com.mirero.dataservice.data.application.service.mapper.RecipeInspectionSummaryMapper;
-import com.mirero.dataservice.data.domain.entity.RecipeInspectionSummary;
+import com.mirero.dataservice.data.domain.entity.RecipeInspectionSummaryEntity;
 import com.mirero.globalmodule.common.dto.LrfFileData;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,8 +26,8 @@ public class RecipeInspectionSummaryCommandServiceImpl implements RecipeInspecti
     @Override
     public RecipeInspectionSummaryInfo saveRecipeInspectionSummary(LrfFileData lrfFileData, UUID equipmentId) {
         RecipeInspectionSummaryRequest request = mapper.toRecipeInspectionSummaryRequest(lrfFileData, equipmentId);
-        RecipeInspectionSummary entity = mapper.toEntity(request);
-        RecipeInspectionSummary savedEntity = commandRepoPort.save(entity);
+        RecipeInspectionSummaryEntity entity = mapper.toEntity(request);
+        RecipeInspectionSummaryEntity savedEntity = commandRepoPort.save(entity);
 
         return mapper.toRecipeInspectionSummaryInfo(savedEntity);
     }

@@ -1,12 +1,12 @@
 package com.mirero.dataservice.data.adaptor.out.persistence.defect;
 
-import com.mirero.dataservice.data.domain.entity.Defect;
+import com.mirero.dataservice.data.domain.entity.DefectEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.UUID;
 
-public interface DefectQueryRepository extends JpaRepository<Defect, UUID> {
+public interface DefectQueryRepository extends JpaRepository<DefectEntity, UUID> {
 
-    List<Defect> findAllByEquipmentId(UUID equipmentId);
+    List<DefectEntity> findAllByEquipmentId(UUID equipmentId);
 }

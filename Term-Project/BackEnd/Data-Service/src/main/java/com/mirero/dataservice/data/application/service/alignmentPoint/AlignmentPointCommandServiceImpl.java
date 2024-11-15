@@ -5,7 +5,7 @@ import com.mirero.dataservice.data.adaptor.in.web.alignmentPoint.dto.AlignmentPo
 import com.mirero.dataservice.data.application.port.in.alignmentPoint.AlignmentPointCommandService;
 import com.mirero.dataservice.data.application.port.out.persistence.alignmentPoint.AlignmentPointCommandRepoPort;
 import com.mirero.dataservice.data.application.service.mapper.AlignmentPointMapper;
-import com.mirero.dataservice.data.domain.entity.AlignmentPoint;
+import com.mirero.dataservice.data.domain.entity.AlignmentPointEntity;
 import com.mirero.globalmodule.common.dto.RffFileData;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,8 +27,8 @@ public class AlignmentPointCommandServiceImpl implements AlignmentPointCommandSe
     @Override
     public List<AlignmentPointInfo> saveAlignmentPointList(RffFileData rffFileData, UUID equipmentId) {
         List<AlignmentPointRequest> requestList = mapper.toAlignmentPointRequestList(rffFileData, equipmentId);
-        List<AlignmentPoint> entityList = mapper.toEntityList(requestList);
-        List<AlignmentPoint> savedEntityList = commandRepoPort.saveAll(entityList);
+        List<AlignmentPointEntity> entityList = mapper.toEntityList(requestList);
+        List<AlignmentPointEntity> savedEntityList = commandRepoPort.saveAll(entityList);
 
         return mapper.toAlignmentPointInfoList(savedEntityList);
     }

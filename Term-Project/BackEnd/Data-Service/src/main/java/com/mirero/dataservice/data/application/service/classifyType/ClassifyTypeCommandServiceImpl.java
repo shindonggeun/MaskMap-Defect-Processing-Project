@@ -5,7 +5,7 @@ import com.mirero.dataservice.data.adaptor.in.web.classifyType.dto.ClassifyTypeR
 import com.mirero.dataservice.data.application.port.in.classifyType.ClassifyTypeCommandService;
 import com.mirero.dataservice.data.application.port.out.persistence.classifyType.ClassifyTypeCommandRepoPort;
 import com.mirero.dataservice.data.application.service.mapper.ClassifyTypeMapper;
-import com.mirero.dataservice.data.domain.entity.ClassifyType;
+import com.mirero.dataservice.data.domain.entity.ClassifyTypeEntity;
 import com.mirero.globalmodule.common.dto.LrfFileData;
 import com.mirero.globalmodule.common.dto.RffFileData;
 import lombok.RequiredArgsConstructor;
@@ -28,8 +28,8 @@ public class ClassifyTypeCommandServiceImpl implements ClassifyTypeCommandServic
     @Override
     public List<ClassifyTypeInfo> saveClassifyTypeList(LrfFileData lrfFileData, RffFileData rffFileData, UUID equipmentId) {
         List<ClassifyTypeRequest> requestList = mapper.toClassifyTypeRequestList(lrfFileData, rffFileData, equipmentId);
-        List<ClassifyType> entityList = mapper.toEntityList(requestList);
-        List<ClassifyType> savedEntityList = commandRepoPort.saveAll(entityList);
+        List<ClassifyTypeEntity> entityList = mapper.toEntityList(requestList);
+        List<ClassifyTypeEntity> savedEntityList = commandRepoPort.saveAll(entityList);
 
         return mapper.toClassifyTypeInfoList(savedEntityList);
     }

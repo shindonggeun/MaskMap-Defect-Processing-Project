@@ -5,7 +5,7 @@ import com.mirero.dataservice.data.application.port.in.equipment.EquipmentComman
 import com.mirero.dataservice.data.application.port.out.persistence.equipment.EquipmentCommandRepoPort;
 import com.mirero.dataservice.data.application.port.out.persistence.equipment.EquipmentQueryRepoPort;
 import com.mirero.dataservice.data.application.service.mapper.EquipmentMapper;
-import com.mirero.dataservice.data.domain.entity.Equipment;
+import com.mirero.dataservice.data.domain.entity.EquipmentEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -27,11 +27,11 @@ public class EquipmentCommandServiceImpl implements EquipmentCommandService {
         return queryRepoPort.findByFileName(fileName)
                 .map(mapper::toEquipmentInfo)
                 .orElseGet(() -> {
-                    Equipment entity = Equipment.builder()
+                    EquipmentEntity entity = EquipmentEntity.builder()
                             .fileName(fileName)
                             .build();
-                    Equipment savedEquipment = commandRepoPort.save(entity);
-                    return mapper.toEquipmentInfo(savedEquipment);
+                    EquipmentEntity savedEquipmentEntity = commandRepoPort.save(entity);
+                    return mapper.toEquipmentInfo(savedEquipmentEntity);
                 });
     }
 }

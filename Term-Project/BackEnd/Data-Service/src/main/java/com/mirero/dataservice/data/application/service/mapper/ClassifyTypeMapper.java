@@ -2,7 +2,7 @@ package com.mirero.dataservice.data.application.service.mapper;
 
 import com.mirero.dataservice.data.adaptor.in.web.classifyType.dto.ClassifyTypeInfo;
 import com.mirero.dataservice.data.adaptor.in.web.classifyType.dto.ClassifyTypeRequest;
-import com.mirero.dataservice.data.domain.entity.ClassifyType;
+import com.mirero.dataservice.data.domain.entity.ClassifyTypeEntity;
 import com.mirero.globalmodule.common.dto.LrfFileData;
 import com.mirero.globalmodule.common.dto.RffFileData;
 import org.mapstruct.Mapper;
@@ -16,13 +16,13 @@ public interface ClassifyTypeMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "equipment.id", source = "equipmentId")
-    ClassifyType toEntity(ClassifyTypeRequest classifyTypeRequest);
+    ClassifyTypeEntity toEntity(ClassifyTypeRequest classifyTypeRequest);
 
-    ClassifyTypeInfo toClassifyTypeInfo(ClassifyType classifyType);
+    ClassifyTypeInfo toClassifyTypeInfo(ClassifyTypeEntity classifyTypeEntity);
 
-    List<ClassifyTypeInfo> toClassifyTypeInfoList(List<ClassifyType> classifyTypeList);
+    List<ClassifyTypeInfo> toClassifyTypeInfoList(List<ClassifyTypeEntity> classifyTypeEntityList);
 
-    default List<ClassifyType> toEntityList(List<ClassifyTypeRequest> classifyTypeRequestList) {
+    default List<ClassifyTypeEntity> toEntityList(List<ClassifyTypeRequest> classifyTypeRequestList) {
         return classifyTypeRequestList.stream()
                 .map(this::toEntity)
                 .toList();

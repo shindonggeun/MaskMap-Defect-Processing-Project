@@ -1,7 +1,7 @@
 package com.mirero.dataservice.data.adaptor.out.persistence.maskMap;
 
 import com.mirero.dataservice.data.application.port.out.persistence.maskMap.MaskMapQueryRepoPort;
-import com.mirero.dataservice.data.domain.entity.MaskMap;
+import com.mirero.dataservice.data.domain.entity.MaskMapEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +14,7 @@ public class MaskMapQueryRepoAdaptor implements MaskMapQueryRepoPort {
     private final MaskMapQueryRepository maskMapQueryRepository;
 
     @Override
-    public MaskMap findByEquipmentId(UUID equipmentId) {
+    public MaskMapEntity findByEquipmentId(UUID equipmentId) {
         return maskMapQueryRepository.findByEquipmentId(equipmentId);
     }
 }

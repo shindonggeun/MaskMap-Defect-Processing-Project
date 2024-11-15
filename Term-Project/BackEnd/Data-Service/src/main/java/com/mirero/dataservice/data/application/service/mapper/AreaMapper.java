@@ -2,7 +2,7 @@ package com.mirero.dataservice.data.application.service.mapper;
 
 import com.mirero.dataservice.data.adaptor.in.web.area.dto.AreaInfo;
 import com.mirero.dataservice.data.adaptor.in.web.area.dto.AreaRequest;
-import com.mirero.dataservice.data.domain.entity.Area;
+import com.mirero.dataservice.data.domain.entity.AreaEntity;
 import com.mirero.globalmodule.common.dto.LrfFileData;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -16,13 +16,13 @@ public interface AreaMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "equipment.id", source = "equipmentId")
-    Area toEntity(AreaRequest areaRequest);
+    AreaEntity toEntity(AreaRequest areaRequest);
 
-    AreaInfo toAreaInfo(Area area);
+    AreaInfo toAreaInfo(AreaEntity areaEntity);
 
-    List<AreaInfo> toAreaInfoList(List<Area> areaList);
+    List<AreaInfo> toAreaInfoList(List<AreaEntity> areaEntityList);
 
-    default List<Area> toEntityList(List<AreaRequest> areaRequestList) {
+    default List<AreaEntity> toEntityList(List<AreaRequest> areaRequestList) {
         return areaRequestList.stream()
                 .map(this::toEntity) // 각 AreaRequest를 Area로 변환
                 .collect(Collectors.toList());

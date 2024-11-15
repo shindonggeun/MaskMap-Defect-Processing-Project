@@ -1,11 +1,11 @@
 package com.mirero.dataservice.data.adaptor.out.persistence.maskMap;
 
-import com.mirero.dataservice.data.domain.entity.MaskMap;
+import com.mirero.dataservice.data.domain.entity.MaskMapEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
 
-public interface MaskMapQueryRepository extends JpaRepository<MaskMap, UUID> {
+public interface MaskMapQueryRepository extends JpaRepository<MaskMapEntity, UUID> {
 
-    MaskMap findByEquipmentId(UUID equipmentId);
+    MaskMapEntity findByEquipmentId(UUID equipmentId);
 }

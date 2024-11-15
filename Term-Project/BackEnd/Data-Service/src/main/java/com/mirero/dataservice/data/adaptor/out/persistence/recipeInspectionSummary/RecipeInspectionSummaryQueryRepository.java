@@ -1,11 +1,11 @@
 package com.mirero.dataservice.data.adaptor.out.persistence.recipeInspectionSummary;
 
-import com.mirero.dataservice.data.domain.entity.RecipeInspectionSummary;
+import com.mirero.dataservice.data.domain.entity.RecipeInspectionSummaryEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
 
-public interface RecipeInspectionSummaryQueryRepository extends JpaRepository<RecipeInspectionSummary, UUID> {
+public interface RecipeInspectionSummaryQueryRepository extends JpaRepository<RecipeInspectionSummaryEntity, UUID> {
 
-    RecipeInspectionSummary findByEquipmentId(UUID equipmentId);
+    RecipeInspectionSummaryEntity findByEquipmentId(UUID equipmentId);
 }

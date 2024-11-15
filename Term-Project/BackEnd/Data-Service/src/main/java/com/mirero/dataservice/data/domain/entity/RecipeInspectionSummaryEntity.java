@@ -11,9 +11,10 @@ import java.util.UUID;
 @Entity
 @Getter
 @Builder
+@Table(name = "recipe_inspection_summary")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public class RecipeInspectionSummary extends BaseEntity {
+public class RecipeInspectionSummaryEntity extends BaseEntity {
 
     @Id
     @Comment("레시피 검사 요약 정보 아이디")
@@ -86,5 +87,5 @@ public class RecipeInspectionSummary extends BaseEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "equipment_id", nullable = false)
-    private Equipment equipment;
+    private EquipmentEntity equipment;
 }

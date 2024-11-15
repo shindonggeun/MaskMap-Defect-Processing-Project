@@ -1,7 +1,7 @@
 package com.mirero.dataservice.data.adaptor.out.persistence.area;
 
 import com.mirero.dataservice.data.application.port.out.persistence.area.AreaCommandRepoPort;
-import com.mirero.dataservice.data.domain.entity.Area;
+import com.mirero.dataservice.data.domain.entity.AreaEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +15,7 @@ public class AreaCommandRepoAdaptor implements AreaCommandRepoPort {
 
 
     @Override
-    public List<Area> saveAll(List<Area> areaList) {
-        return areaCommandRepository.saveAll(areaList);
+    public List<AreaEntity> saveAll(List<AreaEntity> areaEntityList) {
+        return areaCommandRepository.saveAll(areaEntityList);
     }
 }
